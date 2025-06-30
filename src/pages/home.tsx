@@ -31,7 +31,7 @@ const Home = () => {
         </main>
         <section className='text-center mt-20'>
           <h2 className='text-2xl lg:text-4xl pb-4 text-dark-green'>
-            Our Tools
+            Select a Tool
           </h2>
           <h3 className='text-xl lg:text-2xl text-left py-4'>Converters</h3>
           <div className='grid grid-cols-1 lg:grid-cols-4 lg:w-[90%] lg:mx-auto gap-8'>
@@ -77,7 +77,7 @@ const Home = () => {
           </h3>
 
           <div className='lg:w-[90%] lg:mx-auto grid lg:grid-cols-4 gap-8'>
-            <Link to='/tools/speed'>
+            <Link to='/tools/summarizer'>
               <button className='tools-btn'>
                 <img src={documentIcon} alt='image of a document' />
                 <p>PDF & PowerPoint summarizer</p>

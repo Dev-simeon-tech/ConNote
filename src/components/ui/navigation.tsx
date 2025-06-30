@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, Link } from "react-router";
 
 import logo from "../../assets/logo.svg";
 const Navigation = () => {
@@ -14,9 +14,9 @@ const Navigation = () => {
       <header
         className={`flex justify-between items-center lg:backdrop-blur-sm left-0 top-0 bg-white lg:bg-[hsla(0,0%,91%,26%)] lg:shadow-none p-4 lg:py-6 lg:px-10 fixed w-full  shadow-md $`}
       >
-        <a href='/'>
+        <Link to='/'>
           <img src={logo} alt='ConNote logo' />
-        </a>
+        </Link>
         <nav
           id='primary-navigation'
           className={` fixed h-full   lg:py-3 lg:px-2  lg:border-2 lg:border-black lg:rounded-4xl backdrop-blur-sm  inset-0 w-full items-center transition-opacity justify-center lg:block lg:relative lg:opacity-100 lg:w-fit lg:bg-transparent  bg-dark-overlay ${

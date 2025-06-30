@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink, Outlet } from "react-router";
+import { NavLink, Outlet, Link } from "react-router";
 import { SidebarContext } from "../../context/sidebar.context";
 import { useClickOutside } from "../../hooks/useClickOutside";
 
@@ -10,6 +10,7 @@ import areaIcon from "../../assets/area.svg";
 import timeIcon from "../../assets/clock.svg";
 import speedIcon from "../../assets/speedometer.svg";
 import documentIcon from "../../assets/document.svg";
+import logo from "../../assets/logo.svg";
 
 const Sidebar = () => {
   const { isNavOpen, setIsNavOpen } = useContext(SidebarContext);
@@ -26,7 +27,10 @@ const Sidebar = () => {
           isNavOpen ? "left-0" : "-left-[120%]"
         } transition-all duration-150 ease-in-out `}
       >
-        <ul className='mt-20 flex flex-col gap-1'>
+        <Link className='ml-15 pt-4 block' to='/'>
+          <img src={logo} alt='ConNote logo' />
+        </Link>
+        <ul className='mt-10 flex flex-col gap-1'>
           <li>
             <NavLink to='/tools/length' className='nav-link'>
               <img src={lengthIcon} alt='length icon' />
@@ -64,7 +68,7 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to='/tools/pdfSummerizer' className='nav-link'>
+            <NavLink to='/tools/summarizer' className='nav-link'>
               <img src={documentIcon} alt='document icon' />
               <p>PDF & PowerPoint summarizer</p>
             </NavLink>

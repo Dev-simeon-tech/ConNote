@@ -54,7 +54,7 @@ const ToolIndex = () => {
               <p>Speed</p>
             </button>
           </Link>
-          <Link to='/tools/speed'>
+          <Link to='/tools/summarizer'>
             <button className='tools-btn'>
               <img src={documentIcon} alt='image of a document' />
               <p>PDF & PowerPoint summarizer</p>
