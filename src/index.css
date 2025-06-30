@@ -1,0 +1,67 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"); */
+@import "tailwindcss";
+
+@theme {
+  --color-dark-green: hsl(121, 100%, 21%);
+  --color-light-green: hsl(121, 100%, 40%);
+  --color-black: hsl(0, 0%, 0%);
+  --color-white: hsl(0, 0%, 100%);
+  --color-gray: hsl(0, 0%, 85%);
+  --color-dark-overlay: hsla(0, 0%, 0%, 0.5);
+  --color-grey-nav-overlay: hsla(0, 0%, 84%, 32%);
+  --color-dark-gray: hsl(0, 0%, 75%);
+
+  --font-inter: "Inter", sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-white);
+    font-family: "Geist", sans-serif;
+  }
+  .input-field {
+    font-family: "Inter", sans-serif;
+  }
+  button {
+    @apply lg:cursor-pointer;
+  }
+}
+@layer components {
+  #primary-navigation .nav-link.active {
+    @apply text-light-green lg:border-2 lg:rounded-4xl  lg:bg-grey-nav-overlay lg:border-black;
+  }
+  .nav-link {
+    @apply lg:px-6 lg:py-1.5;
+  }
+  .tools-btn {
+    @apply border-2 border-dark-green flex flex-col lg:gap-2 items-center w-full p-2 justify-center cursor-pointer rounded-xl;
+  }
+  .tools-btn:hover {
+    @apply bg-light-green;
+  }
+  .about-offer li {
+    @apply list-disc mx-4;
+  }
+  #sidebar-navigation .nav-link {
+    @apply flex items-center gap-2 relative rounded-md px-3 hover:bg-dark-gray py-3;
+  }
+  #sidebar-navigation .nav-link::before {
+    content: "";
+    @apply absolute hidden w-1.5 h-8 -left-0.5 bg-dark-green rounded-full;
+  }
+  #sidebar-navigation .nav-link.active {
+    @apply bg-dark-gray;
+  }
+  .unit-option::before {
+    content: "";
+    @apply absolute hidden w-1 h-6 -left-[1px] bg-dark-green rounded-full;
+  }
+  #sidebar-navigation .nav-link.active::before,
+  .unit-option.active::before {
+    @apply block;
+  }
+  .keypad button {
+    font-family: "Inter", sans-serif;
+    @apply bg-gray hover:bg-dark-gray text-2xl flex items-center justify-center p-2 lg:px-20 lg:text-4xl;
+  }
+}
