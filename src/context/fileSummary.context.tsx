@@ -6,7 +6,7 @@ type FileSummaryContextType = {
   summary: string;
   setSummary: React.Dispatch<React.SetStateAction<string>>;
   isProcessing: boolean;
-  setIsprocessing: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsProcessing: React.Dispatch<React.SetStateAction<boolean>>;
   fileInputRef: React.RefObject<HTMLInputElement | null>;
 };
 
@@ -19,7 +19,7 @@ export const FileSummaryContextProvider = ({
 }) => {
   const [file, setFile] = useState<File | null>(null);
   const [summary, setSummary] = useState("");
-  const [isProcessing, setIsprocessing] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const value = {
@@ -28,7 +28,7 @@ export const FileSummaryContextProvider = ({
     summary,
     setSummary,
     isProcessing,
-    setIsprocessing,
+    setIsProcessing,
     fileInputRef,
   };
   return (

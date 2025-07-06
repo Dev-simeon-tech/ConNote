@@ -28,7 +28,7 @@
 }
 @layer components {
   .green-btn {
-    @apply bg-dark-green rounded-md px-10 py-2 text-white text-2xl hover:bg-light-green;
+    @apply bg-dark-green rounded-md px-10 py-2 text-white lg:text-2xl text-lg hover:bg-light-green;
   }
   #primary-navigation .nav-link.active {
     @apply text-light-green lg:border-2 lg:rounded-4xl  lg:bg-grey-nav-overlay lg:border-black;
@@ -37,10 +37,7 @@
     @apply lg:px-6 lg:py-1.5;
   }
   .tools-btn {
-    @apply border-2 border-dark-green flex flex-col lg:gap-2 items-center w-full p-2 justify-center cursor-pointer rounded-xl;
-  }
-  .tools-btn:hover {
-    @apply bg-light-green;
+    @apply border-2 border-dark-green flex hover:bg-light-green flex-col lg:gap-2 items-center w-full p-2 justify-center cursor-pointer rounded-xl;
   }
   .about-offer li {
     @apply list-disc mx-4;
@@ -66,5 +63,8 @@
   .keypad button {
     font-family: "Inter", sans-serif;
     @apply bg-gray hover:bg-dark-gray text-2xl flex items-center justify-center p-2 lg:px-20 lg:text-4xl;
+  }
+  .summary-btn {
+    @apply py-3 px-10 text-lg lg:text-2xl rounded-lg gap-2 justify-center flex items-center;
   }
 }

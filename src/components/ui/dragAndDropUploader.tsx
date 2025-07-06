@@ -1,11 +1,10 @@
-import { useContext, useRef, useCallback, useState } from "react";
+import { useContext, useCallback, useState } from "react";
 
 import { FileSummaryContext } from "../../context/fileSummary.context";
 import uploadIcon from "../../assets/upload-icon.svg";
 
 const DragAndDropUploader = () => {
-  const { setFile } = useContext(FileSummaryContext);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { setFile, fileInputRef } = useContext(FileSummaryContext);
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState("");
 
@@ -47,7 +46,7 @@ const DragAndDropUploader = () => {
 
   const onFileChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
-      setFile(e.target.files?.[0]);
+      setFile(e.target.files[0]);
     }
     e.target.value = "";
   };
@@ -56,10 +55,10 @@ const DragAndDropUploader = () => {
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      className='border-2 flex flex-col p-8 gap-8 items-center justify-center border-gray border-dashed rounded-2xl'
+      className='border-2 flex flex-col p-4 lg:p-8 gap-8 items-center justify-center border-gray border-dashed rounded-2xl'
     >
-      <img src={uploadIcon} alt='upload' />
-      <p className='text-xl'>
+      <img className='w-10' src={uploadIcon} alt='upload' />
+      <p className='lg:text-xl text-lg'>
         {isDragging
           ? "Release to upload"
           : "Drag and drop files here, or click browse"}

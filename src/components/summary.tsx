@@ -1,18 +1,75 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import axios from "axios";
 
 import { FileSummaryContext } from "../context/fileSummary.context";
 import { SidebarContext } from "../context/sidebar.context";
+import LinearProgress from "@mui/joy/LinearProgress";
+import SummarySkeleton from "./ui/summarySkeleton";
+import { createPdf } from "../utils/createPdf.utils";
 
 import DragAndDropUploader from "./ui/dragAndDropUploader";
 import pdfIcon from "../assets/pdf.png";
 import pptIcon from "../assets/ppt.png";
+import noteIcon from "../assets/notepad.png";
+import quizIcon from "../assets/quiz-icon.svg";
+import downloadIcon from "../assets/download-icon.svg";
+import refreshIcon from "../assets/refresh.png";
 
 const Summary = () => {
-  const { file, setFile } = useContext(FileSummaryContext);
+  const { file, setFile, isProcessing, setIsProcessing, setSummary, summary } =
+    useContext(FileSummaryContext);
   const { toggleSidebar, animateMenu, isNavOpen } = useContext(SidebarContext);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const changeFileHandler = () => {
     setFile(null);
+  };
+  const resetSummaryHandler = () => {
+    setFile(null);
+    setUploadProgress(0);
+    setSummary("");
+    setIsProcessing(false);
+  };
+
+  const handleUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!file) return alert("Please select a file");
+
+    const formData = new FormData();
+    formData.append("file", file);
+    setIsProcessing(true);
+    setUploadProgress(0);
+    setSummary("");
+
+    try {
+      const res = await axios.post("/api/summarize", formData, {
+        onUploadProgress: (e) => {
+          const percent = Math.round((e.loaded * 100) / (e.total || 1));
+          setUploadProgress(percent);
+        },
+      });
+      // const res = await axios.post(
+      //   "https://jsonplaceholder.typicode.com/posts",
+      //   JSON.stringify({
+      //     title: "foo",
+      //     body: "bar",
+      //     userId: 1,
+      //   }),
+      //   {
+      //     onUploadProgress: (e) => {
+      //       const percent = Math.round((e.loaded * 100) / (e.total || 1));
+      //       setUploadProgress(percent);
+      //     },
+      //   }
+      // );
+      console.log(res.data);
+      setSummary(res.data.summary);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setFile(null);
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -35,39 +92,90 @@ const Summary = () => {
             ></div>
           ))}
         </button>
-        <h2 className='text-2xl'>Pdf and Powerpoint Summarizer</h2>
+        <h2 className='lg:text-2xl text-xl'>Pdf and Powerpoint Summarizer</h2>
       </header>
 
       <div className='flex-grow-1 flex items-center justify-center'>
-        <div className='shadow-xl p-10 rounded-xl text-center h-1/2 w-1/2'>
-          <h3 className='text-4xl'>Select file</h3>
-          <p className='text-[#847F7F]'>
-            only PDF and PowerPoint files are supported
-          </p>
-          {file ? (
-            <div className='flex mt-10 flex-col gap-5 items-center justify-center'>
-              <div className='flex items-center gap-4'>
-                <img
-                  className='w-10'
-                  src={file.name.endsWith(".pdf") ? pdfIcon : pptIcon}
-                  alt='document logo'
-                />
-                <p>{file.name}</p>
+        {uploadProgress === 100 ? (
+          <div className='lg:w-[65%] w-full m-2 relative'>
+            <button
+              onClick={resetSummaryHandler}
+              className='absolute top-1 right-1'
+            >
+              <img className='w-8' src={refreshIcon} alt='reset' />
+            </button>
+            <div className='bg-[#CCFFF3] h-[33rem] border-l-6 rounded-xl border-l-[#00CD1F] lg:p-8 p-4 w-full overflow-y-auto'>
+              <div className='flex items-center gap-2'>
+                <img className='w-10' src={noteIcon} alt='notepad' />
+                <h3 className='text-3xl'>Summary</h3>
               </div>
-              <button
-                onClick={changeFileHandler}
-                className='text-light-green underline'
-              >
-                Change
-              </button>
-              <button className='green-btn'>Upload</button>
+              <div className='mt-15'>
+                {!summary ? <SummarySkeleton /> : <div>{summary}</div>}
+              </div>
             </div>
-          ) : (
-            <form className='mt-6 w-[65%] mx-auto' action=''>
-              <DragAndDropUploader />
-            </form>
-          )}
-        </div>
+
+            <div className='flex flex-col lg:flex-row mt-5 gap-5 lg:gap-10  justify-center'>
+              <button className='summary-btn bg-dark-green text-white  hover:bg-light-green '>
+                <p>Generate quiz </p>
+                <img src={quizIcon} className='w-8' alt='quiz' />
+              </button>
+
+              <button
+                onClick={() => createPdf(summary)}
+                className='summary-btn border-2 bg-transparent border-dark-green'
+              >
+                <p>DownLoad pdf</p>
+                <img src={downloadIcon} className='w-8' alt='download' />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <form
+            onSubmit={handleUpload}
+            className='shadow-xl p-10 rounded-xl text-center h-1/2 m-4 lg:w-1/2'
+          >
+            <h3 className='text-4xl'>Select file</h3>
+            <p className='text-[#847F7F]'>
+              only PDF and PowerPoint files are supported
+            </p>
+            {isProcessing ? (
+              <div className='mt-20 mb-10'>
+                <LinearProgress
+                  determinate
+                  color='success'
+                  value={uploadProgress}
+                />
+              </div>
+            ) : (
+              <>
+                {file ? (
+                  <div className='flex mt-10 flex-col gap-5 items-center justify-center'>
+                    <div className='flex items-center gap-4'>
+                      <img
+                        className='w-10'
+                        src={file.name.endsWith(".pdf") ? pdfIcon : pptIcon}
+                        alt='document logo'
+                      />
+                      <p>{file.name}</p>
+                    </div>
+                    <button
+                      type='button'
+                      onClick={changeFileHandler}
+                      className='text-light-green underline'
+                    >
+                      Change
+                    </button>
+                    <button className='green-btn'>Upload</button>
+                  </div>
+                ) : (
+                  <div className='mt-6 lg:w-[65%] mx-auto'>
+                    <DragAndDropUploader />
+                  </div>
+                )}
+              </>
+            )}
+          </form>
+        )}
       </div>
     </div>
   );
