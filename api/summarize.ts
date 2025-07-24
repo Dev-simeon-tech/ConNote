@@ -11,8 +11,8 @@ export const config = {
   api: { bodyParser: false },
 };
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const ASSISTANT_ID = process.env.OPENAI_ASSISTANT_ID;
+const OPENAI_API_KEY = process.env.VITE_OPENAI_API_KEY;
+const ASSISTANT_ID = process.env.VITE_OPENAI_ASSISTANT_ID;
 
 const openaiHeaders = {
   Authorization: `Bearer ${OPENAI_API_KEY}`,

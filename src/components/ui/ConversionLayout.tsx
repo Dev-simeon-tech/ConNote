@@ -74,7 +74,9 @@ const ConversionLayout = <T,>({
     <>
       <header className='flex h-[10vh] w-full items-center top-0 gap-4 p-4 '>
         <button
-          className=' w-8 h-8 z-40   flex flex-col gap-1 items-center justify-center '
+          className={`w-8 h-8 z-40 ${
+            isNavOpen ? "bg-white" : ""
+          } p-1  flex flex-col gap-1 rounded-sm items-center justify-center`}
           onClick={toggleSidebar}
           aria-controls='sidebar-navigation'
           aria-expanded={isNavOpen}
@@ -93,7 +95,7 @@ const ConversionLayout = <T,>({
         <h2 className='text-3xl font-medium'>{title}</h2>
       </header>
 
-      <div className='flex h-[90vh] flex-col lg:flex-row justify-between'>
+      <div className='flex h-[90vh] flex-col lg:flex-row lg:items-center justify-between'>
         <div className='p-4 lg:px-10 flex lg:h-full lg:items-center'>
           <div className='flex flex-col lg:gap-25 '>
             <div>

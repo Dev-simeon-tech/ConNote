@@ -1,8 +1,6 @@
+import { lazy } from "react";
 import { Link } from "react-router";
 
-import Navigation from "../components/ui/navigation";
-
-import heroImg from "../assets/hero-illustration.png";
 import lengthIcon from "../assets/length.svg";
 import weightIcon from "../assets/weight-scale.svg";
 import temoeratureIcon from "../assets/celsius.svg";
@@ -10,6 +8,9 @@ import areaIcon from "../assets/area.svg";
 import timeIcon from "../assets/clock.svg";
 import speedIcon from "../assets/speedometer.svg";
 import documentIcon from "../assets/document.svg";
+import currencyIcon from "../assets/currency.png";
+
+const Navigation = lazy(() => import("../components/ui/navigation"));
 
 const Home = () => {
   return (
@@ -22,12 +23,16 @@ const Home = () => {
           </h1>
           <p className='lg:max-w-2xl lg:text-lg '>
             Make learning easier with our all-in-one educational toolkit — from
-            unit converters like temperature, weight, area, and time, to
-            intelligent PDF and PowerPoint summarizers. Whether you're a
-            student, teacher, or curious learner, our tools save time and boost
-            understanding instantly.
+            unit converters like temperature, weight, area, time, and even a
+            currency converter, to intelligent PDF and PowerPoint summarizers.
+            Whether you're a student, teacher, or curious learner, our tools
+            save time and boost understanding instantly.
           </p>
-          <img src={heroImg} alt='calculator and note app illustration' />
+          <img
+            src='/hero-illustration.webp'
+            fetchPriority='high'
+            alt='calculator and note app illustration'
+          />
         </main>
         <section className='text-center mt-20'>
           <h2 className='text-2xl lg:text-4xl pb-4 text-dark-green'>
@@ -69,6 +74,16 @@ const Home = () => {
               <button className='tools-btn'>
                 <img src={speedIcon} alt='image of speedometer' />
                 <p>Speed</p>
+              </button>
+            </Link>
+            <Link to='/tools/currency'>
+              <button className='tools-btn'>
+                <img
+                  className='w-10'
+                  src={currencyIcon}
+                  alt='image of dollar exchage to euro'
+                />
+                <p>Currency</p>
               </button>
             </Link>
           </div>

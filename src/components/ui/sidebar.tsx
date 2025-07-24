@@ -10,6 +10,7 @@ import areaIcon from "../../assets/area.svg";
 import timeIcon from "../../assets/clock.svg";
 import speedIcon from "../../assets/speedometer.svg";
 import documentIcon from "../../assets/document.svg";
+import currencyIcon from "../../assets/currency.png";
 import logo from "../../assets/logo.svg";
 
 const Sidebar = () => {
@@ -23,7 +24,7 @@ const Sidebar = () => {
     <>
       <nav
         id='sidebar-navigation'
-        className={`fixed z-25 bg-gray top-0  p-1 overflow-y-auto  h-full ${
+        className={`fixed z-25 bg-gray top-0 w-[75%] lg:w-auto p-1 overflow-y-auto  h-full ${
           isNavOpen ? "left-0" : "-left-[120%]"
         } transition-all duration-150 ease-in-out `}
       >
@@ -63,8 +64,14 @@ const Sidebar = () => {
           </li>
           <li>
             <NavLink to='/tools/speed' className='nav-link'>
-              <img src={speedIcon} alt='area icon' />
+              <img src={speedIcon} alt='speed icon' />
               <p>Speed</p>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to='/tools/currency' className='nav-link'>
+              <img className='w-9' src={currencyIcon} alt='currency icon' />
+              <p>currency</p>
             </NavLink>
           </li>
           <li>

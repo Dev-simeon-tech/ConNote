@@ -8,6 +8,7 @@ import areaIcon from "../assets/area.svg";
 import timeIcon from "../assets/clock.svg";
 import speedIcon from "../assets/speedometer.svg";
 import documentIcon from "../assets/document.svg";
+import currencyIcon from "../assets/currency.png";
 
 const ToolIndex = () => {
   return (
@@ -52,6 +53,16 @@ const ToolIndex = () => {
             <button className='tools-btn'>
               <img src={speedIcon} alt='image of speedometer' />
               <p>Speed</p>
+            </button>
+          </Link>
+          <Link to='/tools/currency'>
+            <button className='tools-btn'>
+              <img
+                className='w-10'
+                src={currencyIcon}
+                alt='image of dollar exchage to euro'
+              />
+              <p>Currency</p>
             </button>
           </Link>
           <Link to='/tools/summarizer'>

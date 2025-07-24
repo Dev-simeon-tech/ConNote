@@ -6,6 +6,7 @@ import { SidebarContext } from "../context/sidebar.context";
 import LinearProgress from "@mui/joy/LinearProgress";
 import SummarySkeleton from "./ui/summarySkeleton";
 import { createPdf } from "../utils/createPdf.utils";
+import { formatSummaryToHTML } from "../utils/formatSummaryToHtml";
 
 import DragAndDropUploader from "./ui/dragAndDropUploader";
 import pdfIcon from "../assets/pdf.png";
@@ -48,21 +49,7 @@ const Summary = () => {
           setUploadProgress(percent);
         },
       });
-      // const res = await axios.post(
-      //   "https://jsonplaceholder.typicode.com/posts",
-      //   JSON.stringify({
-      //     title: "foo",
-      //     body: "bar",
-      //     userId: 1,
-      //   }),
-      //   {
-      //     onUploadProgress: (e) => {
-      //       const percent = Math.round((e.loaded * 100) / (e.total || 1));
-      //       setUploadProgress(percent);
-      //     },
-      //   }
-      // );
-      console.log(res.data);
+
       setSummary(res.data.summary);
     } catch (err) {
       console.error(err);
@@ -110,29 +97,39 @@ const Summary = () => {
                 <h3 className='text-3xl'>Summary</h3>
               </div>
               <div className='mt-15'>
-                {!summary ? <SummarySkeleton /> : <div>{summary}</div>}
+                {!summary ? (
+                  <SummarySkeleton />
+                ) : (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: formatSummaryToHTML(summary),
+                    }}
+                  />
+                )}
               </div>
             </div>
 
-            <div className='flex flex-col lg:flex-row mt-5 gap-5 lg:gap-10  justify-center'>
-              <button className='summary-btn bg-dark-green text-white  hover:bg-light-green '>
-                <p>Generate quiz </p>
-                <img src={quizIcon} className='w-8' alt='quiz' />
-              </button>
+            {summary && (
+              <div className='flex flex-col lg:flex-row mt-5 gap-5 lg:gap-10  justify-center'>
+                <button className='summary-btn bg-dark-green text-white  hover:bg-light-green '>
+                  <p>Generate quiz </p>
+                  <img src={quizIcon} className='w-8' alt='quiz' />
+                </button>
 
-              <button
-                onClick={() => createPdf(summary)}
-                className='summary-btn border-2 bg-transparent border-dark-green'
-              >
-                <p>DownLoad pdf</p>
-                <img src={downloadIcon} className='w-8' alt='download' />
-              </button>
-            </div>
+                <button
+                  onClick={() => createPdf(summary)}
+                  className='summary-btn border-2 bg-transparent border-dark-green'
+                >
+                  <p>DownLoad pdf</p>
+                  <img src={downloadIcon} className='w-8' alt='download' />
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <form
             onSubmit={handleUpload}
-            className='shadow-xl p-10 rounded-xl text-center h-1/2 m-4 lg:w-1/2'
+            className='shadow-container p-10 rounded-xl text-center h-1/2 m-4 lg:w-1/2'
           >
             <h3 className='text-4xl'>Select file</h3>
             <p className='text-[#847F7F]'>

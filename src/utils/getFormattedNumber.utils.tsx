@@ -14,4 +14,3 @@ export const getFormattedNumber = (value: string) => {
 
   return formatted;
 };
-new Intl.NumberFormat("en-US").format(1234567.89);

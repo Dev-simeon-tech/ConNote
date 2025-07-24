@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { signOutUser } from "../../utils/firebase/firebase.utils";
+
+import { UserContext } from "../../context/user.context";
 import { NavLink, Link } from "react-router";
 
 import logo from "../../assets/logo.svg";
 const Navigation = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { user } = useContext(UserContext);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
+  const signOutHandler = async () => {
+    await signOutUser();
+  };
   return (
     <>
-      {/* <section className='h-10 '></section> */}
       <header
         className={`flex justify-between items-center lg:backdrop-blur-sm left-0 top-0 bg-white lg:bg-[hsla(0,0%,91%,26%)] lg:shadow-none p-4 lg:py-6 lg:px-10 fixed w-full  shadow-md $`}
       >
@@ -19,11 +25,11 @@ const Navigation = () => {
         </Link>
         <nav
           id='primary-navigation'
-          className={` fixed h-full   lg:py-3 lg:px-2  lg:border-2 lg:border-black lg:rounded-4xl backdrop-blur-sm  inset-0 w-full items-center transition-opacity justify-center lg:block lg:relative lg:opacity-100 lg:w-fit lg:bg-transparent  bg-dark-overlay ${
+          className={` fixed h-full lg:flex justify-center gap-4 lg:gap-0 lg:flex-row flex-col backdrop-blur-sm w-full inset-0 lg:backdrop-blur-none items-center transition-opacity lg:w-[65%] lg:justify-between lg:relative lg:opacity-100  lg:bg-transparent  bg-dark-overlay ${
             isNavOpen ? "opacity-100 flex" : "hidden opacity-0 "
           } `}
         >
-          <ul className='flex lg:flex-row flex-col  gap-8 lg:gap-16 text-4xl lg:text-xl text-center text-white lg:text-black'>
+          <ul className='flex lg:flex-row lg:border-2 lg:rounded-4xl flex-col lg:py-3 lg:px-2 lg:border-black  gap-8 lg:gap-16 text-4xl lg:text-xl text-center text-white lg:text-black'>
             <li>
               <NavLink className='nav-link' to='/'>
                 Home
@@ -40,6 +46,20 @@ const Navigation = () => {
               </NavLink>
             </li>
           </ul>
+          {user ? (
+            <p
+              onClick={signOutHandler}
+              className='text-xl cursor-pointer text-dark-green hover:text-light-green'
+            >
+              Sign Out
+            </p>
+          ) : (
+            <Link to='/sign-in'>
+              <button className='green-to-transparent  py-2 px-4 text-lg  lg:px-8 rounded-lg'>
+                sign in
+              </button>
+            </Link>
+          )}
         </nav>
         <button
           className='z-20 lg:hidden'

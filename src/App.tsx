@@ -1,15 +1,28 @@
+import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router";
+
 import Home from "./pages/home";
-import About from "./pages/about";
-import Tools from "./pages/tools";
+
+import Spinner from "./components/ui/spinner";
+
+const About = lazy(() => import("./pages/about"));
+const Tools = lazy(() => import("./pages/tools"));
+const SignIn = lazy(() => import("./pages/signIn"));
+const SignUp = lazy(() => import("./pages/signUp"));
+const ForgotPassword = lazy(() => import("./pages/forgotPassword"));
 
 function App() {
   return (
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/about' element={<About />} />
-      <Route path='/tools/*' element={<Tools />} />
-    </Routes>
+    <Suspense fallback={<Spinner />}>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/tools/*' element={<Tools />} />
+        <Route path='/sign-in' element={<SignIn />} />
+        <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+      </Routes>
+    </Suspense>
   );
 }
 

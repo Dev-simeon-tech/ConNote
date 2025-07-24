@@ -30,7 +30,7 @@ const Keypad = ({ setInput, input, keypadtype }: KeypadProps) => {
   };
 
   return (
-    <div className='keypad grid grid-cols-3 gap-1 p-2'>
+    <div className='keypad lg:h-[80%]  grid grid-cols-3 gap-1 p-2'>
       <button
         className='col-start-2 bg-transparent border-1 border-light-green'
         onClick={() => handleClick("C")}

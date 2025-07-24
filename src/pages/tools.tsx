@@ -10,6 +10,7 @@ import Area from "../components/convertors/area";
 import Time from "../components/convertors/time";
 import Speed from "../components/convertors/speed";
 import Sidebar from "../components/ui/sidebar";
+import Currency from "../components/convertors/currency";
 import Summary from "../components/summary";
 
 const Tools = () => {
@@ -26,6 +27,7 @@ const Tools = () => {
               <Route path='area' element={<Area />} />
               <Route path='speed' element={<Speed />} />
               <Route path='time' element={<Time />} />
+              <Route path='currency' element={<Currency />} />
               <Route path='summarizer' element={<Summary />} />
             </Route>
           </Routes>
