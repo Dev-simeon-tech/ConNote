@@ -7,7 +7,6 @@ import axios from "axios";
 export const config = {
   api: { bodyParser: false },
 };
-const { IncomingForm } = await import("formidable");
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const ASSISTANT_ID = process.env.OPENAI_ASSISTANT_ID;
@@ -25,6 +24,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!OPENAI_API_KEY || !ASSISTANT_ID) {
     return res.status(500).json({ error: "Missing OpenAI credentials" });
   }
+  const { IncomingForm } = await import("formidable");
   const FormData = (await import("form-data")).default;
 
   const form = new IncomingForm({
