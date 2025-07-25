@@ -4,17 +4,10 @@ import * as os from "node:os";
 import axios from "axios";
 
 // Disable bodyParser so formidable can handle it
-import { createRequire } from "node:module";
-const require = createRequire(import.meta.url);
 
-// Log resolved paths to see if any CommonJS files sneak in
-console.log(require.resolve("formidable"));
-console.log(require.resolve("axios"));
 export const config = {
   api: { bodyParser: false },
 };
-
-// Log resolved paths to see if any CommonJS files sneak in
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const ASSISTANT_ID = process.env.OPENAI_ASSISTANT_ID;
