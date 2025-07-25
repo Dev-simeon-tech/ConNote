@@ -3,7 +3,6 @@ import { IncomingForm } from "formidable";
 import fs from "fs";
 import os from "os";
 import axios from "axios";
-import FormData from "form-data";
 
 // Disable bodyParser so formidable can handle it
 export const config = {
@@ -26,6 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!OPENAI_API_KEY || !ASSISTANT_ID) {
     return res.status(500).json({ error: "Missing OpenAI credentials" });
   }
+  const FormData = (await import("form-data")).default;
 
   const form = new IncomingForm({
     uploadDir: os.tmpdir(),
