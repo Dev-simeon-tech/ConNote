@@ -4,7 +4,12 @@ import * as os from "node:os";
 import axios from "axios";
 
 // Disable bodyParser so formidable can handle it
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 
+// Log resolved paths to see if any CommonJS files sneak in
+console.log(require.resolve("formidable"));
+console.log(require.resolve("axios"));
 export const config = {
   api: { bodyParser: false },
 };
@@ -37,7 +42,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
-      console.error("❌ Formidable error:", err);
+      console.error("Formidable error:", err);
       return res.status(500).json({ error: "Failed to parse upload" });
     }
 
@@ -129,7 +134,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       res.status(200).json({ summary });
     } catch (error: any) {
       console.error(
-        "❌ Assistants API error:",
+        " Assistants API error:",
         error.response?.data || error.message
       );
       res.status(500).json({ error: "Summarization failed" });
