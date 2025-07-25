@@ -1,5 +1,4 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import { IncomingForm } from "formidable";
 import fs from "fs";
 import os from "os";
 import axios from "axios";
@@ -8,6 +7,7 @@ import axios from "axios";
 export const config = {
   api: { bodyParser: false },
 };
+const { IncomingForm } = await import("formidable");
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const ASSISTANT_ID = process.env.OPENAI_ASSISTANT_ID;
