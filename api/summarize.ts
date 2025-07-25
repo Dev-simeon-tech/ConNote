@@ -2,7 +2,6 @@ import { VercelRequest, VercelResponse } from "@vercel/node";
 import { IncomingForm } from "formidable";
 import fs from "fs";
 import os from "os";
-import path from "path";
 import axios from "axios";
 import FormData from "form-data";
 
