@@ -1,12 +1,15 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
-import fs from "fs";
-import os from "os";
+import * as fs from "node:fs";
+import * as os from "node:os";
 import axios from "axios";
 
 // Disable bodyParser so formidable can handle it
+
 export const config = {
   api: { bodyParser: false },
 };
+
+// Log resolved paths to see if any CommonJS files sneak in
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const ASSISTANT_ID = process.env.OPENAI_ASSISTANT_ID;
