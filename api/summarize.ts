@@ -134,8 +134,8 @@
 //     }
 //   });
 // }
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-function handler(req, res) {
+export default function handler(req: VercelRequest, res: VercelResponse) {
   res.status(200).json({ message: "Testing summarize api" });
 }
-export default handler;
