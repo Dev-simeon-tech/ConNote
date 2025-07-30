@@ -43,7 +43,7 @@ const SignUp = () => {
     }
   };
   return (
-    <div className='min-h-screen flex items-center justify-center'>
+    <div className='min-h-screen mt-20 flex items-center justify-center'>
       <Navigation />
 
       <form
