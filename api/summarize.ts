@@ -1,4 +1,3 @@
-import { VercelRequest, VercelResponse } from "@vercel/node";
 // import fs from "fs";
 // import os from "os";
 // import axios from "axios";
@@ -136,7 +135,7 @@ import { VercelRequest, VercelResponse } from "@vercel/node";
 //   });
 // }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).end("Method Not Allowed");
   }
