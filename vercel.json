@@ -1,8 +1,8 @@
 {
   "rewrites": [{ "source": "/(.*)", "destination": "/" }],
   "functions": {
-    "pages/api/**/*.ts": {
-      "runtime": "@vercel/node"
+    "api/**/*.ts": {
+      "runtime": "@vercel/node@20.x"
     }
   }
 }
