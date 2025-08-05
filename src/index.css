@@ -32,7 +32,7 @@
     @apply bg-dark-green rounded-md px-10 py-2 text-white lg:text-2xl text-lg hover:bg-light-green;
   }
   #primary-navigation .nav-link.active {
-    @apply text-dark-green lg:border-2 lg:rounded-4xl lg:bg-grey-nav-overlay lg:border-black;
+    @apply text-light-green lg:text-dark-green lg:border-2 lg:rounded-4xl lg:bg-grey-nav-overlay lg:border-black;
   }
   .nav-link {
     @apply lg:px-6 lg:py-1.5 hover:text-light-green;

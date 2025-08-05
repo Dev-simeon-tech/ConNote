@@ -12,16 +12,17 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["cn-logo", "hero-illustration"],
       manifest: {
-        name: "ConNote App",
+        name: "ConNote Tool App",
         short_name: "ConNote",
         description:
           "ConNote - Student's Personal unit calculator and Note-Summarizing App",
         display: "standalone",
-        theme_color: "#42b883",
+        theme_color: "#006a10",
         background_color: "#ffffff",
         lang: "en",
         start_url: "/",
         scope: "/",
+        id: "https://con-note.vercel.app/",
         icons: [
           {
             src: "cn-192.png",
@@ -32,6 +33,38 @@ export default defineConfig({
             src: "cn-512.png",
             sizes: "512x512",
             type: "image/png",
+          },
+        ],
+        categories: ["education", "productivity"],
+        shortcuts: [
+          {
+            name: "Summarizer",
+            url: "https://con-note.vercel.app/tools/summarizer",
+            description: "pdf and pptx summarizer tool",
+          },
+          {
+            name: "Currency",
+            url: "https://con-note.vercel.app/tools/currency",
+            description: "currency converter tool",
+          },
+          {
+            name: "Time",
+            url: "https://con-note.vercel.app/tools/time",
+            description: "Time converter tool",
+          },
+        ],
+        screenshots: [
+          {
+            src: "screenshots/home.png",
+            type: "image/png",
+            sizes: "1080x1920",
+            label: "Home Screen",
+          },
+          {
+            src: "screenshots/summarizer.png",
+            type: "image/png",
+            sizes: "1080x1920",
+            label: "pdf and pptx summarizer tool",
           },
         ],
       },
