@@ -43,25 +43,12 @@ const Summary = () => {
     setSummary("");
 
     try {
-      const blobUpload = await axios.post("/api/blobUploadUrl", {
-        filename: file.name,
-        contentType: file.type,
-      });
-
-      const { uploadUrl, blobUrl } = blobUpload.data;
-
-      await axios.put(uploadUrl, file, {
-        headers: {
-          "Content-Type": file.type,
-        },
+      const res = await axios.post("/api/summarize", formData, {
         onUploadProgress: (e) => {
           const percent = Math.round((e.loaded * 100) / (e.total || 1));
           setUploadProgress(percent);
         },
       });
-
-      // Step 2: Send blob URL to summarization function
-      const res = await axios.post("/api/summarize", { blobUrl });
 
       setSummary(res.data.summary);
     } catch (err) {
