@@ -17,6 +17,7 @@
     "@mui/material": "^7.2.0",
     "@tailwindcss/vite": "^4.1.10",
     "@tanstack/react-query": "^5.83.0",
+    "@vercel/blob": "^1.1.1",
     "@vercel/node": "^5.3.6",
     "axios": "^1.10.0",
     "firebase": "^11.10.0",
@@ -29,6 +30,7 @@
     "react-hook-form": "^7.60.0",
     "react-router": "^7.6.2",
     "tailwindcss": "^4.1.10",
+    "uuid": "^11.1.0",
     "zod": "^3.25.75"
   },
   "devDependencies": {
