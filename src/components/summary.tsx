@@ -32,8 +32,7 @@ const Summary = () => {
     setIsProcessing(false);
   };
 
-  const handleUpload = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleDirectUpload = async () => {
     if (!file) return alert("Please select a file");
 
     const formData = new FormData();
@@ -51,11 +50,74 @@ const Summary = () => {
       });
 
       setSummary(res.data.summary);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err.response?.data?.error || "Upload failed");
     } finally {
       setFile(null);
       setIsProcessing(false);
+      setUploadProgress(0);
+    }
+  };
+  const handleCloudUpload = async () => {
+    if (!file) return alert("Please select a file");
+
+    setIsProcessing(true);
+    setUploadProgress(0);
+    setSummary("");
+
+    try {
+      // Step 1: Get presigned upload URL
+      setUploadProgress(5);
+      const { data: uploadData } = await axios.post("/api/getUploadUrl", {
+        fileName: file.name,
+        fileType: file.type,
+        fileSize: file.size,
+      });
+
+      // Step 2: Upload directly to S3
+      setUploadProgress(10);
+      await axios.put(uploadData.uploadUrl, file, {
+        headers: { "Content-Type": file.type },
+        onUploadProgress: (e) => {
+          const percent = Math.round(10 + (e.loaded * 60) / (e.total || 1));
+          setUploadProgress(percent);
+        },
+      });
+
+      // Step 3: Process the uploaded file
+      setUploadProgress(70);
+      const { data: result } = await axios.post(
+        "/api/summarize",
+        {
+          fileKey: uploadData.fileKey,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      setUploadProgress(100);
+      setSummary(result.summary);
+    } catch (err: any) {
+      console.error(err);
+      alert(err.response?.data?.error || "Upload failed");
+    } finally {
+      setFile(null);
+      setIsProcessing(false);
+      setUploadProgress(0);
+    }
+  };
+
+  const handleUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!file) return alert("Please select a file");
+    const fileSizeMB = file.size / (1024 * 1024);
+
+    if (fileSizeMB <= 4) {
+      await handleDirectUpload();
+    } else {
+      await handleCloudUpload();
     }
   };
 
