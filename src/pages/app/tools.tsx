@@ -3,14 +3,14 @@ import { SidebarContextProvider } from "../../context/sidebar.context";
 import { FileSummaryContextProvider } from "../../context/fileSummary.context";
 
 import ToolIndex from "../../components/toolIndex";
-import Length from "../components/convertors/length";
-import Weight from "../components/convertors/weight";
-import Temperature from "../components/convertors/temperature";
-import Area from "../components/convertors/area";
-import Time from "../components/convertors/time";
-import Speed from "../components/convertors/speed";
+import Length from "../../features/convertors/length";
+import Weight from "../../features/convertors//weight";
+import Temperature from "../../features/convertors/temperature";
+import Area from "../../features/convertors/area";
+import Time from "../../features/convertors/time";
+import Speed from "../../features/convertors/speed";
 import Sidebar from "../../components/ui/sidebar";
-import Currency from "../components/convertors/currency";
+import Currency from "../../features/convertors/currency";
 import Summary from "../../features/summary";
 
 const Tools = () => {

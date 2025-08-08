@@ -3,8 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getFormattedNumber } from "../../utils/getFormattedNumber.utils";
 import { SidebarContext } from "../../context/sidebar.context";
-import Spinner from "../ui/spinner";
-import Keypad from "../ui/keypad";
+import Spinner from "../../components/ui/spinner";
+import Keypad from "../../components/ui/keypad";
 import { getFormattedUnitValue } from "../../utils/getFormattedUnitValue.utils";
 import { getDynamicFontSize } from "../../utils/getDynamicFontSize";
 import { getDynamicInputFontSize } from "../../utils/getDynamicFontSize";

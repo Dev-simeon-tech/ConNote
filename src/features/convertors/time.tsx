@@ -1,6 +1,6 @@
 import type { timeType } from "../../utils/timeConvertor.utils";
 import { convertTime } from "../../utils/timeConvertor.utils";
-import ConversionLayout from "../ui/ConversionLayout";
+import ConversionLayout from "../../components/ui/ConversionLayout";
 
 const timeUnits: timeType[] = [
   "Microseconds",

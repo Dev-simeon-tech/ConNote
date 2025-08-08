@@ -1,4 +1,4 @@
-import ConversionLayout from "../ui/ConversionLayout";
+import ConversionLayout from "../../components/ui/ConversionLayout";
 import type { TemperatureType } from "../../utils/temperatureConvertor.utils";
 import { convertTemp } from "../../utils/temperatureConvertor.utils";
 
