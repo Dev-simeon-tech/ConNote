@@ -9,7 +9,7 @@ const About = lazy(() => import("./pages/app/about"));
 const Tools = lazy(() => import("./pages/app/tools"));
 const SignIn = lazy(() => import("./pages/auth/signIn"));
 const SignUp = lazy(() => import("./pages/auth/signUp"));
-const ForgotPassword = lazy(() => import("./pages/app/forgotPassword"));
+const ForgotPassword = lazy(() => import("./pages/auth/forgotPassword"));
 const Quiz = lazy(() => import("./pages/app/quiz"));
 
 function App() {
