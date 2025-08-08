@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPassword } from "../../lib/firebase/firebase";
 import Navigation from "../../components/ui/navigation";
 import type { SubmitHandler } from "react-hook-form";
-import emailIcon from "../assets/email.png";
+import emailIcon from "../../assets/email.png";
 
 type ForgotPasswordType = z.infer<typeof ForgotPasswordSchema>;
 
