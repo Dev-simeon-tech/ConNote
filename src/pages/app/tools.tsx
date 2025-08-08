@@ -1,17 +1,17 @@
 import { Route, Routes } from "react-router";
-import { SidebarContextProvider } from "../context/sidebar.context";
-import { FileSummaryContextProvider } from "../context/fileSummary.context";
+import { SidebarContextProvider } from "../../context/sidebar.context";
+import { FileSummaryContextProvider } from "../../context/fileSummary.context";
 
-import ToolIndex from "../components/toolIndex";
+import ToolIndex from "../../components/toolIndex";
 import Length from "../components/convertors/length";
 import Weight from "../components/convertors/weight";
 import Temperature from "../components/convertors/temperature";
 import Area from "../components/convertors/area";
 import Time from "../components/convertors/time";
 import Speed from "../components/convertors/speed";
-import Sidebar from "../components/ui/sidebar";
+import Sidebar from "../../components/ui/sidebar";
 import Currency from "../components/convertors/currency";
-import Summary from "../components/summary";
+import Summary from "../../features/summary";
 
 const Tools = () => {
   return (

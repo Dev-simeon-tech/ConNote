@@ -5,11 +5,11 @@ import { Link } from "react-router";
 import { FileSummaryContext } from "../context/fileSummary.context";
 import { SidebarContext } from "../context/sidebar.context";
 import LinearProgress from "@mui/joy/LinearProgress";
-import SummarySkeleton from "./ui/summarySkeleton";
+import SummarySkeleton from "../components/ui/summarySkeleton";
 import { createPdf } from "../utils/createPdf.utils";
 import { formatSummaryToHTML } from "../utils/formatSummaryToHtml";
 
-import DragAndDropUploader from "./ui/dragAndDropUploader";
+import DragAndDropUploader from "../components/ui/dragAndDropUploader";
 import pdfIcon from "../assets/pdf.png";
 import pptIcon from "../assets/ppt.png";
 import noteIcon from "../assets/notepad.png";

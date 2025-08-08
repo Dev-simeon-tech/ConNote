@@ -1,16 +1,16 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router";
 
-import Home from "./pages/home";
+import Home from "./pages/app/home";
 
 import Spinner from "./components/ui/spinner";
 
-const About = lazy(() => import("./pages/about"));
-const Tools = lazy(() => import("./pages/tools"));
-const SignIn = lazy(() => import("./pages/signIn"));
-const SignUp = lazy(() => import("./pages/signUp"));
-const ForgotPassword = lazy(() => import("./pages/forgotPassword"));
-const Quiz = lazy(() => import("./pages/quiz"));
+const About = lazy(() => import("./pages/app/about"));
+const Tools = lazy(() => import("./pages/app/tools"));
+const SignIn = lazy(() => import("./pages/auth/signIn"));
+const SignUp = lazy(() => import("./pages/auth/signUp"));
+const ForgotPassword = lazy(() => import("./pages/app/forgotPassword"));
+const Quiz = lazy(() => import("./pages/app/quiz"));
 
 function App() {
   return (

@@ -6,11 +6,11 @@ import * as z from "zod/v4";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInUser } from "../utils/firebase/firebase.utils";
-import { signInWithGoogle } from "../utils/firebase/firebase.utils";
-import { SignInSchema } from "../schema/signIn.schema";
+import { signInUser } from "../../lib/firebase/firebase";
+import { signInWithGoogle } from "../../lib/firebase/firebase";
+import { SignInSchema } from "../../schema/signIn.schema";
 
-import Navigation from "../components/ui/navigation";
+import Navigation from "../../components/ui/navigation";
 import googleIcon from "../assets/google.png";
 
 type SignInFormType = z.infer<typeof SignInSchema>;

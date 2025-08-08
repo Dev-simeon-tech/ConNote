@@ -1,4 +1,4 @@
-import Navigation from "../components/ui/navigation";
+import Navigation from "../../components/ui/navigation";
 
 const About = () => {
   return (

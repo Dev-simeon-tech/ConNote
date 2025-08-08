@@ -10,7 +10,7 @@ import speedIcon from "../assets/speedometer.svg";
 import documentIcon from "../assets/document.svg";
 import currencyIcon from "../assets/currency.png";
 
-const Navigation = lazy(() => import("../components/ui/navigation"));
+const Navigation = lazy(() => import("../../components/ui/navigation"));
 
 const Home = () => {
   return (

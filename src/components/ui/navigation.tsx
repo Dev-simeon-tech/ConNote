@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { signOutUser } from "../../utils/firebase/firebase.utils";
+import { signOutUser } from "../../lib/firebase/firebase";
 
 import { UserContext } from "../../context/user.context";
 import { NavLink, Link } from "react-router";

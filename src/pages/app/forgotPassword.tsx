@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 
 import * as z from "zod/v4";
 import { Link } from "react-router";
-import { ForgotPasswordSchema } from "../schema/forgotPassword.schema";
+import { ForgotPasswordSchema } from "../../schema/forgotPassword.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { resetPassword } from "../utils/firebase/firebase.utils";
-import Navigation from "../components/ui/navigation";
+import { resetPassword } from "../../lib/firebase/firebase";
+import Navigation from "../../components/ui/navigation";
 import type { SubmitHandler } from "react-hook-form";
 import emailIcon from "../assets/email.png";
 

@@ -35,7 +35,7 @@ const s3Client = new S3Client({
 });
 
 const textractClient = new TextractClient({
-  region: process.env.AWS_REGION!,
+  region: process.env.AWS_TEXTRACT_REGION || "us-east-1", // Use different region for Textract
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,

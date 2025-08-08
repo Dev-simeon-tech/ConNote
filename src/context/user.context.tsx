@@ -1,10 +1,7 @@
 import { createContext, type ReactNode, useState, useEffect } from "react";
 
 import type { User } from "firebase/auth";
-import {
-  authStateChangedlistener,
-  storeUser,
-} from "../utils/firebase/firebase.utils";
+import { authStateChangedlistener, storeUser } from "../lib/firebase/firebase";
 
 export type UserContextType = {
   user: User | null;

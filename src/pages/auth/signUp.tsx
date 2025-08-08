@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form";
 
 import type { SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SignUpSchema } from "../schema/signUp.schema";
-import { createUser } from "../utils/firebase/firebase.utils";
-import Navigation from "../components/ui/navigation";
+import { SignUpSchema } from "../../schema/signUp.schema";
+import { createUser } from "../../lib/firebase/firebase";
+import Navigation from "../../components/ui/navigation";
 import { useNavigate, Link } from "react-router";
-import { storeUser } from "../utils/firebase/firebase.utils";
+import { storeUser } from "../../lib/firebase/firebase";
 
 type SignUpFormType = z.infer<typeof SignUpSchema>;
 
