@@ -11,7 +11,7 @@ import { signInWithGoogle } from "../../lib/firebase/firebase";
 import { SignInSchema } from "../../schema/signIn.schema";
 
 import Navigation from "../../components/ui/navigation";
-import googleIcon from "../assets/google.png";
+import googleIcon from "../../assets/google.png";
 
 type SignInFormType = z.infer<typeof SignInSchema>;
 
