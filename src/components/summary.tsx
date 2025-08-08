@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router";
 
 import { FileSummaryContext } from "../context/fileSummary.context";
 import { SidebarContext } from "../context/sidebar.context";
@@ -173,10 +174,13 @@ const Summary = () => {
 
             {summary && (
               <div className='flex flex-col lg:flex-row mt-5 gap-5 lg:gap-10  justify-center'>
-                <button className='summary-btn bg-dark-green text-white  hover:bg-light-green '>
+                <Link
+                  to='quiz'
+                  className='summary-btn bg-dark-green text-white  hover:bg-light-green '
+                >
                   <p>Generate quiz </p>
                   <img src={quizIcon} className='w-8' alt='quiz' />
-                </button>
+                </Link>
 
                 <button
                   onClick={() => createPdf(summary)}

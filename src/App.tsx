@@ -10,6 +10,7 @@ const Tools = lazy(() => import("./pages/tools"));
 const SignIn = lazy(() => import("./pages/signIn"));
 const SignUp = lazy(() => import("./pages/signUp"));
 const ForgotPassword = lazy(() => import("./pages/forgotPassword"));
+const Quiz = lazy(() => import("./pages/quiz"));
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/quiz' element={<Quiz />} />
       </Routes>
     </Suspense>
   );
