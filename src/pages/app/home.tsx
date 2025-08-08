@@ -1,14 +1,14 @@
 import { lazy } from "react";
 import { Link } from "react-router";
 
-import lengthIcon from "../assets/length.svg";
-import weightIcon from "../assets/weight-scale.svg";
-import temoeratureIcon from "../assets/celsius.svg";
-import areaIcon from "../assets/area.svg";
-import timeIcon from "../assets/clock.svg";
-import speedIcon from "../assets/speedometer.svg";
-import documentIcon from "../assets/document.svg";
-import currencyIcon from "../assets/currency.png";
+import lengthIcon from "../../assets/length.svg";
+import weightIcon from "../../assets/weight-scale.svg";
+import temoeratureIcon from "../../assets/celsius.svg";
+import areaIcon from "../../assets/area.svg";
+import timeIcon from "../../assets/clock.svg";
+import speedIcon from "../../assets/speedometer.svg";
+import documentIcon from "../../assets/document.svg";
+import currencyIcon from "../../assets/currency.png";
 
 const Navigation = lazy(() => import("../../components/ui/navigation"));
 

@@ -1,4 +1,4 @@
-import comingSoon from "../assets/coming-soon.svg";
+import comingSoon from "../../assets/coming-soon.svg";
 
 const Quiz = () => {
   return (
