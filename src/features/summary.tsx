@@ -57,7 +57,6 @@ const Summary = () => {
     } finally {
       setFile(null);
       setIsProcessing(false);
-      setUploadProgress(0);
     }
   };
   const handleCloudUpload = async () => {
@@ -106,7 +105,6 @@ const Summary = () => {
     } finally {
       setFile(null);
       setIsProcessing(false);
-      setUploadProgress(0);
     }
   };
 
