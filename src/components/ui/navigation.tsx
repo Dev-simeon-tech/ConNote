@@ -49,7 +49,7 @@ const Navigation = () => {
           {user ? (
             <p
               onClick={signOutHandler}
-              className='text-xl cursor-pointer text-dark-green hover:text-light-green'
+              className='lg:text-xl text-3xl mt-10 lg:mt-0 cursor-pointer text-light-green lg:text-dark-green lg:hover:text-light-green'
             >
               Sign Out
             </p>

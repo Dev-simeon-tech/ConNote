@@ -173,7 +173,7 @@ const Summary = () => {
             {summary && (
               <div className='flex flex-col lg:flex-row mt-5 gap-5 lg:gap-10  justify-center'>
                 <Link
-                  to='quiz'
+                  to='/quiz'
                   className='summary-btn bg-dark-green text-white  hover:bg-light-green '
                 >
                   <p>Generate quiz </p>
