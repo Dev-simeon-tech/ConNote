@@ -1,13 +1,14 @@
 import { lazy } from "react";
 import { Link } from "react-router";
+import Footer from "../../components/ui/footer";
 
-import lengthIcon from "../../assets/length.svg";
-import weightIcon from "../../assets/weight-scale.svg";
-import temoeratureIcon from "../../assets/celsius.svg";
-import areaIcon from "../../assets/area.svg";
-import timeIcon from "../../assets/clock.svg";
-import speedIcon from "../../assets/speedometer.svg";
-import documentIcon from "../../assets/document.svg";
+import lengthIcon from "../../assets/length.png";
+import weightIcon from "../../assets/weight-scale.png";
+import temoeratureIcon from "../../assets/celsius.png";
+import areaIcon from "../../assets/area.png";
+import timeIcon from "../../assets/clock.png";
+import speedIcon from "../../assets/speedometer.png";
+import documentIcon from "../../assets/document.png";
 import currencyIcon from "../../assets/currency.png";
 
 const Navigation = lazy(() => import("../../components/ui/navigation"));
@@ -29,7 +30,7 @@ const Home = () => {
             save time and boost understanding instantly.
           </p>
           <img
-            src='/hero-illustration.webp'
+            src='/hero-illustration.jpg'
             fetchPriority='high'
             alt='calculator and note app illustration'
           />
@@ -101,9 +102,7 @@ const Home = () => {
           </div>
         </section>
       </div>
-      <footer className='bg-dark-green text-white text-center py-6 px-4 mt-20'>
-        Copyrights &copy; 2025 ConNote | Coded by Dev Simeon
-      </footer>
+      <Footer />
     </>
   );
 };

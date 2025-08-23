@@ -1,5 +1,5 @@
 import type { WeightType } from "../../utils/weightConvertor.utils";
-import ConversionLayout from "../../components/ui/ConversionLayout";
+import ConversionLayout from "../../components/layout/ConversionLayout";
 import { convertWeight } from "../../utils/weightConvertor.utils";
 
 const WeightUnits: WeightType[] = [

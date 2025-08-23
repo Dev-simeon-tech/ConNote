@@ -1,13 +1,13 @@
 import { Link } from "react-router";
 import Navigation from "../components/ui/navigation";
 
-import lengthIcon from "../assets/length.svg";
-import weightIcon from "../assets/weight-scale.svg";
-import temoeratureIcon from "../assets/celsius.svg";
-import areaIcon from "../assets/area.svg";
-import timeIcon from "../assets/clock.svg";
-import speedIcon from "../assets/speedometer.svg";
-import documentIcon from "../assets/document.svg";
+import lengthIcon from "../assets/length.png";
+import weightIcon from "../assets/weight-scale.png";
+import temoeratureIcon from "../assets/celsius.png";
+import areaIcon from "../assets/area.png";
+import timeIcon from "../assets/clock.png";
+import speedIcon from "../assets/speedometer.png";
+import documentIcon from "../assets/document.png";
 import currencyIcon from "../assets/currency.png";
 
 const ToolIndex = () => {

@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router";
 
 import Home from "./pages/app/home";
+import NotFound from "./pages/notFound";
 
 import Spinner from "./components/ui/spinner";
 
@@ -23,6 +24,7 @@ function App() {
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/quiz' element={<Quiz />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </Suspense>
   );

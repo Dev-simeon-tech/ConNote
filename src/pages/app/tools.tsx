@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router";
 import { SidebarContextProvider } from "../../context/sidebar.context";
 import { FileSummaryContextProvider } from "../../context/fileSummary.context";
+import { DropdownContextProvider } from "../../context/dropdown.context";
 
 import ToolIndex from "../../components/toolIndex";
 import Length from "../../features/convertors/length";
@@ -12,25 +13,29 @@ import Speed from "../../features/convertors/speed";
 import Sidebar from "../../components/ui/sidebar";
 import Currency from "../../features/convertors/currency";
 import Summary from "../../features/summary";
+import NotFound from "../notFound";
 
 const Tools = () => {
   return (
     <>
       <SidebarContextProvider>
         <FileSummaryContextProvider>
-          <Routes>
-            <Route index element={<ToolIndex />} />
-            <Route element={<Sidebar />}>
-              <Route path='length' element={<Length />} />
-              <Route path='weight' element={<Weight />} />
-              <Route path='temperature' element={<Temperature />} />
-              <Route path='area' element={<Area />} />
-              <Route path='speed' element={<Speed />} />
-              <Route path='time' element={<Time />} />
-              <Route path='currency' element={<Currency />} />
-              <Route path='summarizer' element={<Summary />} />
-            </Route>
-          </Routes>
+          <DropdownContextProvider>
+            <Routes>
+              <Route index element={<ToolIndex />} />
+              <Route element={<Sidebar />}>
+                <Route path='length' element={<Length />} />
+                <Route path='weight' element={<Weight />} />
+                <Route path='temperature' element={<Temperature />} />
+                <Route path='area' element={<Area />} />
+                <Route path='speed' element={<Speed />} />
+                <Route path='time' element={<Time />} />
+                <Route path='currency' element={<Currency />} />
+                <Route path='summarizer' element={<Summary />} />
+                <Route path='*' element={<NotFound />} />
+              </Route>
+            </Routes>
+          </DropdownContextProvider>
         </FileSummaryContextProvider>
       </SidebarContextProvider>
     </>

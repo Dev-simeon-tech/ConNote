@@ -1,10 +1,11 @@
 import Navigation from "../../components/ui/navigation";
+import Footer from "../../components/ui/footer";
 
 const About = () => {
   return (
-    <div className='px-4'>
+    <div className='flex flex-col min-h-screen'>
       <Navigation />
-      <main className='text-center mt-35'>
+      <main className='text-center flex-1 mt-35 px-4'>
         <h2 className='lg:text-5xl text-3xl text-dark-green'>About us</h2>
         <p className='my-10 lg:max-w-[80ch] mx-auto '>
           ConNote, is all about making learning more accessible, efficient, and
@@ -18,7 +19,7 @@ const About = () => {
           tools you can use from anywhere, anytime.
         </p>
       </main>
-      <section className='mt-20 lg:w-[80%] mx-auto'>
+      <section className='mt-20 flex-1 lg:w-[80%] mx-auto px-4'>
         <h3 className='lg:text-2xl text-xl pb-8'>What We Offer:</h3>
         <ul className='about-offer space-y-6'>
           <li>
@@ -37,6 +38,7 @@ const About = () => {
           </li>
         </ul>
       </section>
+      <Footer />
     </div>
   );
 };

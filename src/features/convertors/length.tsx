@@ -1,4 +1,4 @@
-import ConversionLayout from "../../components/ui/ConversionLayout";
+import ConversionLayout from "../../components/layout/ConversionLayout";
 import type { LengthUnit } from "../../utils/lengthConvertor.utils";
 import { convertLength } from "../../utils/lengthConvertor.utils";
 

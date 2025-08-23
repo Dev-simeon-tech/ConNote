@@ -10,6 +10,7 @@
   --color-grey-nav-overlay: hsla(0, 0%, 84%, 32%);
   --color-dark-gray: hsl(0, 0%, 75%);
   --color-light-gray: hsl(0, 2%, 89%);
+  --color-light-overlay: hsla(0, 0%, 100%, 0.5);
   --color-brownish-gray: hsl(0, 2%, 51%);
 
   --shadow-container: 1px 0px 13px -4px rgba(0, 0, 0, 0.25);
@@ -36,6 +37,10 @@
   }
   .nav-link {
     @apply lg:px-6 lg:py-1.5 hover:text-light-green;
+  }
+  .nav-link img,
+  .tools-btn img {
+    @apply w-9;
   }
   .tools-btn {
     @apply border-2 border-dark-green flex hover:bg-light-green flex-col lg:gap-2 items-center w-full p-2 justify-center cursor-pointer rounded-xl;

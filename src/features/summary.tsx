@@ -3,13 +3,14 @@ import axios from "axios";
 import { Link } from "react-router";
 
 import { FileSummaryContext } from "../context/fileSummary.context";
-import { SidebarContext } from "../context/sidebar.context";
 import LinearProgress from "@mui/joy/LinearProgress";
 import SummarySkeleton from "../components/ui/summarySkeleton";
 import { createPdf } from "../utils/createPdf.utils";
 import { formatSummaryToHTML } from "../utils/formatSummaryToHtml";
 
 import DragAndDropUploader from "../components/ui/dragAndDropUploader";
+import MenuButton from "../components/ui/menuButton";
+
 import pdfIcon from "../assets/pdf.png";
 import pptIcon from "../assets/ppt.png";
 import noteIcon from "../assets/notepad.png";
@@ -20,7 +21,6 @@ import refreshIcon from "../assets/refresh.png";
 const Summary = () => {
   const { file, setFile, isProcessing, setIsProcessing, setSummary, summary } =
     useContext(FileSummaryContext);
-  const { toggleSidebar, animateMenu, isNavOpen } = useContext(SidebarContext);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   const changeFileHandler = () => {
@@ -123,23 +123,7 @@ const Summary = () => {
   return (
     <div className='min-h-screen flex flex-col'>
       <header className='flex h-[10vh] w-full items-center top-0 gap-4 p-4 '>
-        <button
-          className=' w-8 h-8 z-40   flex flex-col gap-1 items-center justify-center '
-          onClick={toggleSidebar}
-          aria-controls='sidebar-navigation'
-          aria-expanded={isNavOpen}
-        >
-          <span className='sr-only'>Toggle sidebar navigation</span>
-
-          {[0, 1, 2].map((__, index) => (
-            <div
-              key={index}
-              className={`bg-black transition-all rounded-2xl duration-150  h-0.75 ${
-                animateMenu ? "w-3" : "w-6"
-              }`}
-            ></div>
-          ))}
-        </button>
+        <MenuButton />
         <h2 className='lg:text-2xl text-xl'>Pdf and Powerpoint Summarizer</h2>
       </header>
 

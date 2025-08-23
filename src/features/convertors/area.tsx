@@ -1,4 +1,4 @@
-import ConversionLayout from "../../components/ui/ConversionLayout";
+import ConversionLayout from "../../components/layout/ConversionLayout";
 import { convertArea } from "../../utils/areaConvertor.utils";
 import type { areaType } from "../../utils/areaConvertor.utils";
 

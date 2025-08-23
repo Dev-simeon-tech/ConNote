@@ -1,51 +1,58 @@
-import { useState, useEffect, useContext, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect, useMemo } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+
+import useCurrencies from "../../hooks/useCurrencies";
+import useCurrencyRates from "../../hooks/useCurrencyRates";
+import { useClickOutside } from "../../hooks/useClickOutside";
+
+import Spinner from "../../components/ui/spinner";
+import MenuButton from "../../components/ui/menuButton";
+import Keypad from "../../components/ui/keypad";
+import Error from "../../components/ui/error";
+import Button from "../../components/ui/button";
 
 import { getFormattedNumber } from "../../utils/getFormattedNumber.utils";
-import { SidebarContext } from "../../context/sidebar.context";
-import Spinner from "../../components/ui/spinner";
-import Keypad from "../../components/ui/keypad";
 import { getFormattedUnitValue } from "../../utils/getFormattedUnitValue.utils";
 import { getDynamicFontSize } from "../../utils/getDynamicFontSize";
 import { getDynamicInputFontSize } from "../../utils/getDynamicFontSize";
-import { useClickOutside } from "../../hooks/useClickOutside";
-import { fetchData } from "../../utils/fetchData.utils";
 import { convertCurrency } from "../../utils/currencyConverter.utils";
+
 import arrowIcon from "../../assets/arrow-up.svg";
 
-const apiKey = import.meta.env.VITE_CURRENCY_API_KEY;
-
-const currencyListUrl = `https://api.currencyapi.com/v3/currencies?apikey=${apiKey}&currencies`;
-const ratesUrl = `https://api.currencyapi.com/v3/latest?apikey=${apiKey}`;
-
 const Currency = () => {
+  const queryClient = useQueryClient();
   const {
     data: rates,
     error: errorRates,
     isLoading: loadingRates,
-  } = useQuery({
-    queryKey: ["currencyRates", { ratesUrl }],
-    queryFn: () => fetchData(ratesUrl),
-    staleTime: 1000 * 60 * 10, // 10 minutes: keeps rates fresh but avoids spam fetching
-    refetchOnMount: false, // Don't refetch if data is still in cache
-    refetchOnWindowFocus: false, // Don't refetch just by switching tabs
-    refetchInterval: false, // No polling unless you want live updating
-  });
+    isRefetching: refetchingRates,
+    refetch: refetchRates,
+  } = useCurrencyRates();
 
   const {
     data: currencies,
     error: errorCurrency,
     isLoading: loadingCurrency,
-  } = useQuery({
-    queryKey: ["currencies", { currencyListUrl }],
-    queryFn: () => fetchData(currencyListUrl),
-    staleTime: 1000 * 60 * 60, // 1hr
-  });
+    isRefetchError: refetchingCurrency,
+    refetch: refetchCurrencies,
+  } = useCurrencies();
 
   if (errorCurrency || errorRates) {
-    console.error("Error fetching currency data:", errorCurrency || errorRates);
+    return (
+      <Error>
+        <h2 className='text-3xl'>Something went wrong!</h2>
+        <Button
+          onClick={() =>
+            queryClient.invalidateQueries({
+              queryKey: ["currencyRates", "currencies"],
+            })
+          }
+        >
+          Refetch
+        </Button>
+      </Error>
+    );
   }
-
   const currenciesArray = useMemo(
     () =>
       currencies?.data
@@ -68,7 +75,6 @@ const Currency = () => {
   const [inputCurrency, setInputCurrency] = useState("0");
   const [isDropdown1Open, setIsDropdown1Open] = useState(false);
   const [isDropdown2Open, setIsDropdown2Open] = useState(false);
-  const { toggleSidebar, isNavOpen, animateMenu } = useContext(SidebarContext);
 
   const dynamicResultSize = getDynamicFontSize(
     getFormattedUnitValue(convertedCurrency).length
@@ -82,7 +88,7 @@ const Currency = () => {
     setIsDropdown2Open(false);
   });
   useEffect(() => {
-    if (!fromCurrency && currenciesArray.length) {
+    if (currenciesArray.length) {
       setFromCurrency(currenciesArray[2].name);
       setToCurrency(currenciesArray[8].name);
     }
@@ -106,7 +112,7 @@ const Currency = () => {
       );
       setConvertedCurrency(convertedValue);
     }
-  }, [inputCurrency, fromCurrency, toCurrency, currenciesArray]);
+  }, [inputCurrency, fromCurrency, toCurrency, currenciesArray, rates]);
 
   const toggleDropdown1 = () => {
     setIsDropdown1Open(!isDropdown1Open);
@@ -126,34 +132,29 @@ const Currency = () => {
     setToCurrency(currency);
     setIsDropdown2Open(false);
   };
+  const refetchData = () => {
+    refetchCurrencies();
+    refetchRates();
+  };
 
-  if (loadingCurrency || loadingRates) {
+  if (
+    loadingCurrency ||
+    loadingRates ||
+    refetchingRates ||
+    refetchingCurrency
+  ) {
     return <Spinner />;
   }
   return (
     <>
       <header className='flex h-[10vh] w-full items-center gap-4 p-4 '>
-        <button
-          className={`w-8 h-8 z-40 ${
-            isNavOpen ? "bg-white" : ""
-          } p-1  flex flex-col gap-1 rounded-sm items-center justify-center`}
-          onClick={toggleSidebar}
-          aria-controls='sidebar-navigation'
-          aria-expanded={isNavOpen}
-        >
-          <span className='sr-only'>Toggle sidebar navigation</span>
-
-          {[0, 1, 2].map((__, index) => (
-            <div
-              key={index}
-              className={`bg-black transition-all rounded-2xl duration-150  h-0.75 ${
-                animateMenu ? "w-3" : "w-6"
-              }`}
-            ></div>
-          ))}
-        </button>
+        <MenuButton />
         <h2 className='text-3xl font-medium'>Currency</h2>
       </header>
+
+      <h3 className='lg:ml-15 ml-4 mt-5 text-xl'>
+        <strong>instruction: </strong> Click on the Keypad to input values
+      </h3>
 
       <div className='flex h-[90vh] flex-col lg:flex-row lg:items-center justify-between'>
         <div className='p-4 lg:px-10 flex lg:h-full lg:items-center'>
@@ -260,6 +261,9 @@ const Currency = () => {
                 </div>
               </div>
             </div>
+            <button onClick={refetchData} className='text-light-green w-fit'>
+              Update rates
+            </button>
           </div>
         </div>
 

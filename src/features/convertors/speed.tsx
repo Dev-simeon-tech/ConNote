@@ -1,5 +1,5 @@
 import type { speedType } from "../../utils/speedConvertor.utils";
-import ConversionLayout from "../../components/ui/ConversionLayout";
+import ConversionLayout from "../../components/layout/ConversionLayout";
 import { convertSpeed } from "../../utils/speedConvertor.utils";
 
 const speedUnits: speedType[] = [
