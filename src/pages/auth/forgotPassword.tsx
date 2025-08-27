@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPassword } from "../../lib/firebase/firebase";
 import Navigation from "../../components/ui/navigation";
 import type { SubmitHandler } from "react-hook-form";
-import emailIcon from "../../assets/email.png";
+import EmailIcon from "../../assets/email.svg?react";
 
 type ForgotPasswordType = z.infer<typeof ForgotPasswordSchema>;
 
@@ -45,7 +45,7 @@ const ForgotPassword = () => {
               Check your Email
             </h2>
 
-            <img className='w-16 pb-6' src={emailIcon} alt='email' />
+            <EmailIcon width={"3.5rem"} height={"3.5rem"} />
 
             <p className='text-center'>
               We have sent a password recovery your email{" "}

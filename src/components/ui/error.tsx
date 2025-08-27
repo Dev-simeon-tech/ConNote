@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
-import errorImg from "../../assets/warning.png";
+import ErrorImg from "../../assets/warning.svg?react";
 
 const Error = ({ children }: { children: ReactNode }) => {
   return (
     <div className='flex flex-col mt-20 justify-center h-screen'>
-      <img src={errorImg} alt='error' />
+      <ErrorImg width={"4.5rem"} height={"4.5rem"} />
       {children}
     </div>
   );

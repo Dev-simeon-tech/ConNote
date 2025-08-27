@@ -12,7 +12,7 @@ import { SignInSchema } from "../../schema/signIn.schema";
 
 import Navigation from "../../components/ui/navigation";
 import Spinner from "../../components/ui/spinner";
-import googleIcon from "../../assets/google.png";
+import GoogleIcon from "../../assets/google.svg?react";
 
 type SignInFormType = z.infer<typeof SignInSchema>;
 
@@ -137,7 +137,7 @@ const SignIn = () => {
             onClick={googleSignInHandler}
             className='flex gap-4 max-[23rem]:flex-col py-2 rounded-md px-6 mt-5 justify-center items-center w-full border-1 border-light-gray'
           >
-            <img className='w-6' src={googleIcon} alt='google' />
+            <GoogleIcon width={"2rem"} height={"2rem"} />
             <p className='text-xl'>Sign in with Google</p>
           </button>
         </form>

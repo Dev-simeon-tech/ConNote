@@ -1,70 +1,38 @@
-import { useContext } from "react";
-import { DropdownContext } from "../../context/dropdown.context";
+import { useRef, useState, useEffect } from "react";
 import { useClickOutside } from "../../hooks/useClickOutside";
+import ListComponent from "./listComponent";
 
-import arrowIcon from "../../assets/arrow-up.svg";
+import ArrowIcon from "../../assets/arrow-up.svg?react";
 
 type DropdownProps<T> = {
-  unitsArr: T[];
-  unitValue: T;
-  unitType?: string;
-  setFromUnit: React.Dispatch<React.SetStateAction<T>>;
-  setToUnit: React.Dispatch<React.SetStateAction<T>>;
+  itemsArr: T[];
+  currentItem: T;
+  renderItem: (item: T, index: number) => React.ReactNode;
 };
 
 const Dropdown = <T,>({
-  unitsArr,
-  unitValue,
-  setFromUnit,
-  setToUnit,
-  unitType,
+  itemsArr,
+  currentItem,
+  renderItem,
 }: DropdownProps<T>) => {
-  const {
-    isDropdown1Open,
-    isDropdown2Open,
-    setIsDropdown2Open,
-    setIsDropdown1Open,
-  } = useContext(DropdownContext);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  useClickOutside(".unit-dropdown", () => {
-    setIsDropdown1Open(false);
-    setIsDropdown2Open(false);
+  useClickOutside(dropdownRef, () => {
+    setIsOpen(false);
   });
 
-  const toggleDropdown1 = () => {
-    setIsDropdown1Open(!isDropdown1Open);
-    setIsDropdown2Open(false);
-  };
-  const toggleDropdown2 = () => {
-    setIsDropdown2Open(!isDropdown2Open);
-    setIsDropdown1Open(false);
-  };
-
-  const fromUnitChangeHandler = (unit: T) => {
-    setFromUnit(unit);
-    setIsDropdown1Open(false);
-  };
-
-  const toUnitChangeHandler = (unit: T) => {
-    setToUnit(unit);
-    setIsDropdown2Open(false);
-  };
-  const unitChangeHandler = (unit: T) => {
-    if (unitType === "fromUnit") {
-      fromUnitChangeHandler(unit);
-    } else {
-      toUnitChangeHandler(unit);
-    }
-  };
-  const isOpen = unitType === "fromUnit" ? isDropdown1Open : isDropdown2Open;
+  useEffect(() => {
+    setIsOpen(false);
+  }, [currentItem]);
   return (
-    <>
+    <div ref={dropdownRef}>
       <button
-        onClick={unitType === "fromUnit" ? toggleDropdown1 : toggleDropdown2}
+        onClick={() => setIsOpen(!isOpen)}
         className='flex gap-2 items-center'
       >
-        <p className='capitalize text-xl'>{String(unitValue)}</p>
-        <img src={arrowIcon} alt='arrow icon' />
+        <p className='capitalize text-xl'>{String(currentItem)}</p>
+        <ArrowIcon width={"1.5rem"} height={"1.5rem"} />
       </button>
       <div
         role='listbox'
@@ -75,19 +43,9 @@ const Dropdown = <T,>({
             : "max-h-0 overflow-y-hidden"
         }`}
       >
-        {unitsArr.map((unit, index) => (
-          <button
-            onClick={() => unitChangeHandler(unit)}
-            className={`unit-option px-2 py-1 relative hover:bg-dark-gray rounded-md ${
-              unitValue === unit ? "active bg-dark-gray" : ""
-            }`}
-            key={index}
-          >
-            <p className='capitalize text-left'>{String(unit)}</p>
-          </button>
-        ))}
+        <ListComponent data={itemsArr} renderItem={renderItem} />
       </div>
-    </>
+    </div>
   );
 };
 

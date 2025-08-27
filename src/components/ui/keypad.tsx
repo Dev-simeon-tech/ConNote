@@ -1,5 +1,5 @@
-import deleteIcon from "../../assets/delete.svg";
-import minusPlusIcon from "../../assets/minus-plus.svg";
+import DeleteIcon from "../../assets/delete.svg?react";
+import MinusPlusIcon from "../../assets/minus-plus.svg?react";
 type KeypadProps = {
   setInput: React.Dispatch<React.SetStateAction<string>>;
   input: string;
@@ -38,7 +38,7 @@ const Keypad = ({ setInput, input, keypadtype }: KeypadProps) => {
         CE
       </button>
       <button onClick={() => handleClick("←")}>
-        <img src={deleteIcon} alt='delete' />
+        <DeleteIcon width={"3rem"} height={"3rem"} />
       </button>
       {["7", "8", "9", "4", "5", "6", "1", "2", "3", "0", "."].map((val) => (
         <button
@@ -51,7 +51,7 @@ const Keypad = ({ setInput, input, keypadtype }: KeypadProps) => {
       ))}
       {keypadtype && (
         <button className='row-start-5' onClick={() => handleClick("-/+")}>
-          <img src={minusPlusIcon} alt='add and remove minus' />
+          <MinusPlusIcon width={"2.5rem"} height={"2.5rem"} />
         </button>
       )}
     </div>

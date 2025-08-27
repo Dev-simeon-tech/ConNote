@@ -1,15 +1,14 @@
 import { useState, useEffect, useMemo } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 
 import useCurrencies from "../../hooks/useCurrencies";
 import useCurrencyRates from "../../hooks/useCurrencyRates";
-import { useClickOutside } from "../../hooks/useClickOutside";
 
 import Spinner from "../../components/ui/spinner";
 import MenuButton from "../../components/ui/menuButton";
 import Keypad from "../../components/ui/keypad";
 import Error from "../../components/ui/error";
 import Button from "../../components/ui/button";
+import Dropdown from "../../components/ui/dropdown";
 
 import { getFormattedNumber } from "../../utils/getFormattedNumber.utils";
 import { getFormattedUnitValue } from "../../utils/getFormattedUnitValue.utils";
@@ -17,10 +16,7 @@ import { getDynamicFontSize } from "../../utils/getDynamicFontSize";
 import { getDynamicInputFontSize } from "../../utils/getDynamicFontSize";
 import { convertCurrency } from "../../utils/currencyConverter.utils";
 
-import arrowIcon from "../../assets/arrow-up.svg";
-
 const Currency = () => {
-  const queryClient = useQueryClient();
   const {
     data: rates,
     error: errorRates,
@@ -37,19 +33,16 @@ const Currency = () => {
     refetch: refetchCurrencies,
   } = useCurrencies();
 
+  const refetchData = () => {
+    refetchCurrencies();
+    refetchRates();
+  };
+
   if (errorCurrency || errorRates) {
     return (
       <Error>
         <h2 className='text-3xl'>Something went wrong!</h2>
-        <Button
-          onClick={() =>
-            queryClient.invalidateQueries({
-              queryKey: ["currencyRates", "currencies"],
-            })
-          }
-        >
-          Refetch
-        </Button>
+        <Button onClick={() => refetchData()}>Refetch</Button>
       </Error>
     );
   }
@@ -73,8 +66,6 @@ const Currency = () => {
   const [toCurrency, setToCurrency] = useState("");
   const [convertedCurrency, setConvertedCurrency] = useState<number>(0);
   const [inputCurrency, setInputCurrency] = useState("0");
-  const [isDropdown1Open, setIsDropdown1Open] = useState(false);
-  const [isDropdown2Open, setIsDropdown2Open] = useState(false);
 
   const dynamicResultSize = getDynamicFontSize(
     getFormattedUnitValue(convertedCurrency).length
@@ -83,10 +74,6 @@ const Currency = () => {
     getFormattedNumber(inputCurrency).length
   );
 
-  useClickOutside(".unit-dropdown", () => {
-    setIsDropdown1Open(false);
-    setIsDropdown2Open(false);
-  });
   useEffect(() => {
     if (currenciesArray.length) {
       setFromCurrency(currenciesArray[2].name);
@@ -113,29 +100,6 @@ const Currency = () => {
       setConvertedCurrency(convertedValue);
     }
   }, [inputCurrency, fromCurrency, toCurrency, currenciesArray, rates]);
-
-  const toggleDropdown1 = () => {
-    setIsDropdown1Open(!isDropdown1Open);
-    setIsDropdown2Open(false);
-  };
-  const toggleDropdown2 = () => {
-    setIsDropdown2Open(!isDropdown2Open);
-    setIsDropdown1Open(false);
-  };
-
-  const fromCurrencyChangeHandler = (currency: string) => {
-    setFromCurrency(currency);
-    setIsDropdown1Open(false);
-  };
-
-  const toCurrencyChangeHandler = (currency: string) => {
-    setToCurrency(currency);
-    setIsDropdown2Open(false);
-  };
-  const refetchData = () => {
-    refetchCurrencies();
-    refetchRates();
-  };
 
   if (
     loadingCurrency ||
@@ -176,38 +140,21 @@ const Currency = () => {
                 {getFormattedNumber(inputCurrency)}
               </p>
               <div className='relative lg:w-[16rem] w-full unit-dropdown flex flex-col gap-4'>
-                <button
-                  onClick={toggleDropdown1}
-                  className='flex gap-2 items-center'
-                >
-                  <p className='capitalize text-xl'>{String(fromCurrency)}</p>
-                  <img src={arrowIcon} alt='arrow icon' />
-                </button>
-                <div
-                  role='listbox'
-                  aria-expanded={isDropdown1Open}
-                  className={`flex bg-gray z-50 w-full rounded-md gap-1 -top-1/2 -translate-y-1/2 transition-all flex-col absolute ${
-                    isDropdown1Open
-                      ? "max-h-[25rem] overflow-y-auto p-1"
-                      : "max-h-0 overflow-y-hidden"
-                  }`}
-                >
-                  {currenciesArray.map((currency, index) => (
+                <Dropdown
+                  itemsArr={currenciesArray.map((currency) => currency.name)}
+                  currentItem={fromCurrency}
+                  renderItem={(currency, index) => (
                     <button
-                      onClick={() => fromCurrencyChangeHandler(currency.name)}
+                      onClick={() => setFromCurrency(currency)}
                       className={`unit-option px-2 py-1 relative hover:bg-dark-gray rounded-md ${
-                        fromCurrency === currency.name
-                          ? "active bg-dark-gray"
-                          : ""
+                        fromCurrency === currency ? "active bg-dark-gray" : ""
                       }`}
                       key={index}
                     >
-                      <p className='capitalize text-left'>
-                        {String(currency.name)}
-                      </p>
+                      <p className='capitalize text-left'>{String(currency)}</p>
                     </button>
-                  ))}
-                </div>
+                  )}
+                />
               </div>
             </div>
             <div>
@@ -226,39 +173,22 @@ const Currency = () => {
               >
                 {new Intl.NumberFormat("en-US").format(convertedCurrency)}
               </p>
-              <div className='unit-dropdown w-full relative flex flex-col gap-4'>
-                <button
-                  onClick={toggleDropdown2}
-                  className='flex gap-2 items-center'
-                >
-                  <p className='capitalize text-xl'>{String(toCurrency)}</p>
-                  <img src={arrowIcon} alt='arrow icon' />
-                </button>
-                <div
-                  role='listbox'
-                  aria-expanded={isDropdown2Open}
-                  className={`flex bg-gray rounded-md gap-1 w-full lg:w-[16rem] -top-1/2 -translate-y-1/2  transition-all flex-col absolute ${
-                    isDropdown2Open
-                      ? "max-h-[25rem] overflow-y-auto p-1"
-                      : "max-h-0 overflow-y-hidden"
-                  }`}
-                >
-                  {currenciesArray.map((currency, index) => (
+              <div className='w-full relative flex flex-col gap-4'>
+                <Dropdown
+                  itemsArr={currenciesArray.map((currency) => currency.name)}
+                  currentItem={toCurrency}
+                  renderItem={(currency, index) => (
                     <button
-                      onClick={() => toCurrencyChangeHandler(currency.name)}
+                      onClick={() => setToCurrency(currency)}
                       className={`unit-option px-2 py-1 relative hover:bg-dark-gray rounded-md ${
-                        toCurrency === currency.name
-                          ? "active bg-dark-gray"
-                          : ""
+                        toCurrency === currency ? "active bg-dark-gray" : ""
                       }`}
                       key={index}
                     >
-                      <p className='capitalize text-left'>
-                        {String(currency.name)}
-                      </p>
+                      <p className='capitalize text-left'>{String(currency)}</p>
                     </button>
-                  ))}
-                </div>
+                  )}
+                />
               </div>
             </div>
             <button onClick={refetchData} className='text-light-green w-fit'>

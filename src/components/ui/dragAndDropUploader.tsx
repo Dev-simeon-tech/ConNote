@@ -1,7 +1,7 @@
 import { useContext, useCallback, useState } from "react";
 
 import { FileSummaryContext } from "../../context/fileSummary.context";
-import uploadIcon from "../../assets/upload-icon.svg";
+import UploadIcon from "../../assets/upload-icon.svg?react";
 
 const DragAndDropUploader = () => {
   const { setFile, fileInputRef } = useContext(FileSummaryContext);
@@ -57,7 +57,7 @@ const DragAndDropUploader = () => {
       onDrop={handleDrop}
       className='border-2 flex flex-col p-4 lg:p-8 gap-8 items-center justify-center border-gray border-dashed rounded-2xl'
     >
-      <img className='w-10' src={uploadIcon} alt='upload' />
+      <UploadIcon width={"2.25rem"} height={"2.25rem"} />
       <p className='lg:text-xl text-lg'>
         {isDragging
           ? "Release to upload"

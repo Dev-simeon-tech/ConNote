@@ -11,12 +11,12 @@ import { formatSummaryToHTML } from "../utils/formatSummaryToHtml";
 import DragAndDropUploader from "../components/ui/dragAndDropUploader";
 import MenuButton from "../components/ui/menuButton";
 
-import pdfIcon from "../assets/pdf.png";
-import pptIcon from "../assets/ppt.png";
-import noteIcon from "../assets/notepad.png";
-import quizIcon from "../assets/quiz-icon.svg";
-import downloadIcon from "../assets/download-icon.svg";
-import refreshIcon from "../assets/refresh.png";
+import PdfIcon from "../assets/pdf.svg?react";
+import PptIcon from "../assets/ppt.svg?react";
+import NoteIcon from "../assets/notepad.svg?react";
+import QuizIcon from "../assets/quiz-icon.svg?react";
+import DownloadIcon from "../assets/download-icon.svg?react";
+import RefreshIcon from "../assets/refresh.svg?react";
 
 const Summary = () => {
   const { file, setFile, isProcessing, setIsProcessing, setSummary, summary } =
@@ -134,11 +134,11 @@ const Summary = () => {
               onClick={resetSummaryHandler}
               className='absolute top-1 right-1'
             >
-              <img className='w-8' src={refreshIcon} alt='reset' />
+              <RefreshIcon width={"2.25rem"} height={"2.25rem"} />
             </button>
             <div className='bg-[#CCFFF3] h-[33rem] border-l-6 rounded-xl border-l-[#00CD1F] lg:p-8 p-4 w-full overflow-y-auto'>
               <div className='flex items-center gap-2'>
-                <img className='w-10' src={noteIcon} alt='notepad' />
+                <NoteIcon width={"2.25rem"} height={"2.25rem"} />
                 <h3 className='text-3xl'>Summary</h3>
               </div>
               <div className='mt-15'>
@@ -161,7 +161,7 @@ const Summary = () => {
                   className='summary-btn bg-dark-green text-white  hover:bg-light-green '
                 >
                   <p>Generate quiz </p>
-                  <img src={quizIcon} className='w-8' alt='quiz' />
+                  <QuizIcon width={"2.25rem"} height={"2.25rem"} />
                 </Link>
 
                 <button
@@ -169,7 +169,7 @@ const Summary = () => {
                   className='summary-btn border-2 bg-transparent border-dark-green'
                 >
                   <p>DownLoad pdf</p>
-                  <img src={downloadIcon} className='w-8' alt='download' />
+                  <DownloadIcon width={"2.25rem"} height={"2.25rem"} />
                 </button>
               </div>
             )}
@@ -196,11 +196,11 @@ const Summary = () => {
                 {file ? (
                   <div className='flex mt-10 flex-col gap-5 items-center justify-center'>
                     <div className='flex items-center gap-4'>
-                      <img
-                        className='w-10'
-                        src={file.name.endsWith(".pdf") ? pdfIcon : pptIcon}
-                        alt='document logo'
-                      />
+                      {file.type === "application/pdf" ? (
+                        <PdfIcon width={"2.25rem"} height={"2.25rem"} />
+                      ) : (
+                        <PptIcon width={"2.25rem"} height={"2.25rem"} />
+                      )}
                       <p>{file.name}</p>
                     </div>
                     <button

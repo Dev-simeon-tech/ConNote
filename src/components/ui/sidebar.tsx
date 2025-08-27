@@ -1,82 +1,87 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { NavLink, Outlet, Link } from "react-router";
 import { SidebarContext } from "../../context/sidebar.context";
 import { useClickOutside } from "../../hooks/useClickOutside";
 
-import lengthIcon from "../../assets/length.png";
-import weightIcon from "../../assets/weight-scale.png";
-import temoeratureIcon from "../../assets/celsius.png";
-import areaIcon from "../../assets/area.png";
-import timeIcon from "../../assets/clock.png";
-import speedIcon from "../../assets/speedometer.png";
-import documentIcon from "../../assets/document.png";
-import currencyIcon from "../../assets/currency.png";
-import logo from "../../assets/logo.svg";
+import LengthIcon from "../../assets/length.svg?react";
+import WeightIcon from "../../assets/weight-scale.svg?react";
+import TemperatureIcon from "../../assets/celsius.svg?react";
+import AreaIcon from "../../assets/area.svg?react";
+import TimeIcon from "../../assets/clock.svg?react";
+import SpeedIcon from "../../assets/speedometer.svg?react";
+import DocumentIcon from "../../assets/document.svg?react";
+import CurrencyIcon from "../../assets/currency.svg?react";
+import Logo from "../../assets/logo.svg?react";
 
 const Sidebar = () => {
   const { isNavOpen, setIsNavOpen } = useContext(SidebarContext);
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
-  useClickOutside("#side-navigation", () => {
+  useClickOutside(sidebarRef, () => {
     setIsNavOpen(false);
   });
 
   return (
     <>
       <nav
+        ref={sidebarRef}
         id='sidebar-navigation'
         className={`fixed z-25 bg-gray top-0 w-[75%] lg:w-auto p-1 overflow-y-auto  h-full ${
           isNavOpen ? "left-0" : "-left-[120%]"
         } transition-all duration-150 ease-in-out `}
       >
-        <Link className='ml-15 pt-4 block' to='/'>
-          <img src={logo} alt='ConNote logo' />
+        <Link className='ml-15 block' to='/'>
+          <Logo width={"7rem"} height={"4rem"} />
         </Link>
-        <ul className='mt-10 flex flex-col gap-1'>
+        <ul
+          onClick={() => setIsNavOpen(!isNavOpen)}
+          className='mt-5 flex flex-col gap-1'
+        >
           <li>
             <NavLink to='/tools/length' className='nav-link'>
-              <img src={lengthIcon} alt='length icon' />
+              <LengthIcon width={"2.25rem"} height={"2.25rem"} />
               <p>Length</p>
             </NavLink>
           </li>
           <li>
             <NavLink to='/tools/weight' className='nav-link'>
-              <img src={weightIcon} alt='weight icon' />
+              <WeightIcon width={"2.25rem"} height={"2.25rem"} />
               <p>Weight and mass</p>
             </NavLink>
           </li>
           <li>
             <NavLink to='/tools/temperature' className='nav-link'>
-              <img src={temoeratureIcon} alt='temperture icon' />
+              <TemperatureIcon width={"2.25rem"} height={"2.25rem"} />
               <p>Temperature</p>
             </NavLink>
           </li>
           <li>
             <NavLink to='/tools/area' className='nav-link'>
-              <img src={areaIcon} alt='area icon' />
+              <AreaIcon width={"2.25rem"} height={"2.25rem"} />
               <p>Area</p>
             </NavLink>
           </li>
           <li>
             <NavLink to='/tools/time' className='nav-link'>
-              <img src={timeIcon} alt='time icon' />
+              <TimeIcon width={"2.25rem"} height={"2.25rem"} />
               <p>Time</p>
             </NavLink>
           </li>
           <li>
             <NavLink to='/tools/speed' className='nav-link'>
-              <img src={speedIcon} alt='speed icon' />
+              <SpeedIcon width={"2.25rem"} height={"2.25rem"} />
               <p>Speed</p>
             </NavLink>
           </li>
           <li>
             <NavLink to='/tools/currency' className='nav-link'>
-              <img className='w-9' src={currencyIcon} alt='currency icon' />
+              <CurrencyIcon width={"2.25rem"} height={"2.25rem"} />
               <p>currency</p>
             </NavLink>
           </li>
           <li>
             <NavLink to='/tools/summarizer' className='nav-link'>
-              <img src={documentIcon} alt='document icon' />
+              <DocumentIcon width={"2.25rem"} height={"2.25rem"} />
               <p>PDF & PowerPoint summarizer</p>
             </NavLink>
           </li>

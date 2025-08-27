@@ -65,13 +65,21 @@ const ConversionLayout = <T,>({
               >
                 {getFormattedNumber(inputUnit)}
               </p>
-              <div className='relative w-fit unit-dropdown flex flex-col gap-4'>
+              <div className='relative w-fit flex flex-col gap-4'>
                 <Dropdown
-                  unitsArr={unitsArr}
-                  unitValue={fromUnit}
-                  unitType='fromUnit'
-                  setFromUnit={setFromUnit}
-                  setToUnit={setToUnit}
+                  itemsArr={unitsArr}
+                  currentItem={fromUnit}
+                  renderItem={(unit, index) => (
+                    <button
+                      onClick={() => setFromUnit(unit)}
+                      className={`unit-option px-2 py-1 relative hover:bg-dark-gray rounded-md ${
+                        fromUnit === unit ? "active bg-dark-gray" : ""
+                      }`}
+                      key={index}
+                    >
+                      <p className='capitalize text-left'>{String(unit)}</p>
+                    </button>
+                  )}
                 />
               </div>
             </div>
@@ -84,11 +92,19 @@ const ConversionLayout = <T,>({
               </p>
               <div className='unit-dropdown w-fit relative flex flex-col gap-4'>
                 <Dropdown
-                  unitsArr={unitsArr}
-                  unitType='toUnit'
-                  unitValue={toUnit}
-                  setFromUnit={setFromUnit}
-                  setToUnit={setToUnit}
+                  itemsArr={unitsArr}
+                  currentItem={toUnit}
+                  renderItem={(unit, index) => (
+                    <button
+                      onClick={() => setToUnit(unit)}
+                      className={`unit-option px-2 py-1 relative hover:bg-dark-gray rounded-md ${
+                        toUnit === unit ? "active bg-dark-gray" : ""
+                      }`}
+                      key={index}
+                    >
+                      <p className='capitalize text-left'>{String(unit)}</p>
+                    </button>
+                  )}
                 />
               </div>
             </div>

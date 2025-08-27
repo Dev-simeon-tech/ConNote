@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 /// <reference types="vite-plugin-pwa/client" />
+/// <reference types="vite-plugin-svgr/client" />
 declare module "pdf-parse" {
   interface PDFData {
     numpages: number;
