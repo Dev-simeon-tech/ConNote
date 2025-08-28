@@ -10,6 +10,7 @@ import { formatSummaryToHTML } from "../utils/formatSummaryToHtml";
 
 import DragAndDropUploader from "../components/ui/dragAndDropUploader";
 import MenuButton from "../components/ui/menuButton";
+import Button from "../components/ui/button";
 
 import PdfIcon from "../assets/pdf.svg?react";
 import PptIcon from "../assets/ppt.svg?react";
@@ -155,22 +156,29 @@ const Summary = () => {
             </div>
 
             {summary && (
-              <div className='flex flex-col lg:flex-row mt-5 gap-5 lg:gap-10  justify-center'>
-                <Link
-                  to='/quiz'
-                  className='summary-btn bg-dark-green text-white  hover:bg-light-green '
-                >
-                  <p>Generate quiz </p>
-                  <QuizIcon width={"2.25rem"} height={"2.25rem"} />
+              <div className='flex flex-col lg:flex-row mt-5 gap-5 lg:gap-10 justify-center'>
+                <Link to='/quiz'>
+                  <Button
+                    variant='primary'
+                    className='gap-3 justify-center flex items-center'
+                  >
+                    <p>Generate quiz </p>
+                    <QuizIcon width={"1.8rem"} height={"1.8rem"} />
+                  </Button>
                 </Link>
 
-                <button
+                <Button
                   onClick={() => createPdf(summary)}
-                  className='summary-btn border-2 bg-transparent border-dark-green'
+                  variant='inverted'
+                  className='gap-2 justify-center flex items-center'
                 >
-                  <p>DownLoad pdf</p>
-                  <DownloadIcon width={"2.25rem"} height={"2.25rem"} />
-                </button>
+                  <p>Download pdf</p>
+                  <DownloadIcon
+                    className='hover:fill-white'
+                    width={"1.8rem"}
+                    height={"1.8rem"}
+                  />
+                </Button>
               </div>
             )}
           </div>
@@ -210,7 +218,9 @@ const Summary = () => {
                     >
                       Change
                     </button>
-                    <button className='green-btn'>Upload</button>
+                    <Button variant='primary' className='lg:px-6'>
+                      Upload
+                    </Button>
                   </div>
                 ) : (
                   <div className='mt-6 lg:w-[65%] mx-auto'>

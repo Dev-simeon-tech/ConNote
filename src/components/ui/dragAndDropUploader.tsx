@@ -1,6 +1,7 @@
 import { useContext, useCallback, useState } from "react";
 
 import { FileSummaryContext } from "../../context/fileSummary.context";
+import Button from "./button";
 import UploadIcon from "../../assets/upload-icon.svg?react";
 
 const DragAndDropUploader = () => {
@@ -73,9 +74,9 @@ const DragAndDropUploader = () => {
         style={{ display: "none" }}
       />
       {error && <p className='text-red-500'>{error}</p>}
-      <button type='button' onClick={onClickHandler} className='green-btn'>
+      <Button onClick={onClickHandler} variant='primary' type='button'>
         Browse
-      </button>
+      </Button>
     </div>
   );
 };

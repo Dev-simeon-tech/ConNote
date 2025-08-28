@@ -42,7 +42,9 @@ const Currency = () => {
     return (
       <Error>
         <h2 className='text-3xl'>Something went wrong!</h2>
-        <Button onClick={() => refetchData()}>Refetch</Button>
+        <Button variant='inverted' onClick={() => refetchData()}>
+          Refetch
+        </Button>
       </Error>
     );
   }

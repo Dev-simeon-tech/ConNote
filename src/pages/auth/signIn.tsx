@@ -12,6 +12,7 @@ import { SignInSchema } from "../../schema/signIn.schema";
 
 import Navigation from "../../components/ui/navigation";
 import Spinner from "../../components/ui/spinner";
+import Button from "../../components/ui/button";
 import GoogleIcon from "../../assets/google.svg?react";
 
 type SignInFormType = z.infer<typeof SignInSchema>;
@@ -123,9 +124,9 @@ const SignIn = () => {
               Forgot Password?
             </Link>
           </div>
-          <button className='text-xl w-full rounded-md green-to-transparent mt-5 py-2.5 px-5'>
+          <Button variant='primary' className='text-xl w-full rounded-md  mt-5'>
             Sign in
-          </button>
+          </Button>
 
           <div className='flex mt-5 items-center gap-3'>
             <div className='border-1 flex-1 h-0 border-light-gray '></div>

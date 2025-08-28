@@ -9,7 +9,9 @@ import { createUser } from "../../lib/firebase/firebase";
 import Navigation from "../../components/ui/navigation";
 import { useNavigate, Link } from "react-router";
 import { storeUser } from "../../lib/firebase/firebase";
+
 import Spinner from "../../components/ui/spinner";
+import Button from "../../components/ui/button";
 
 type SignUpFormType = z.infer<typeof SignUpSchema>;
 
@@ -108,9 +110,9 @@ const SignUp = () => {
             <span className='text-sm text-light-green'>Sign In</span>
           </Link>
 
-          <button className='text-xl w-full rounded-md green-to-transparent mt-5 py-2.5 px-5'>
+          <Button variant='primary' className='text-xl w-full rounded-md  mt-5'>
             Sign Up
-          </button>
+          </Button>
         </form>
       </div>
     </>

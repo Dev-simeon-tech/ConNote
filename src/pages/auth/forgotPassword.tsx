@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPassword } from "../../lib/firebase/firebase";
 import Navigation from "../../components/ui/navigation";
 import type { SubmitHandler } from "react-hook-form";
+import Button from "../../components/ui/button";
+
 import EmailIcon from "../../assets/email.svg?react";
 
 type ForgotPasswordType = z.infer<typeof ForgotPasswordSchema>;
@@ -53,9 +55,12 @@ const ForgotPassword = () => {
             </p>
 
             <Link to='/sign-in'>
-              <button className='text-lg rounded-md w-fit block mx-auto green-to-transparent mt-5 py-2.5 px-5'>
+              <Button
+                variant='primary'
+                className='rounded-md w-fit block mx-auto mt-5'
+              >
                 Back to Sign In
-              </button>
+              </Button>
             </Link>
           </div>
         ) : (
@@ -81,9 +86,12 @@ const ForgotPassword = () => {
                 <p className='text-sm text-red-500'>{errors.email.message}</p>
               )}
             </div>
-            <button className='text-lg rounded-md w-fit block mx-auto green-to-transparent mt-5 py-2.5 px-5'>
+            <Button
+              variant='primary'
+              className='rounded-md w-fit block mx-auto mt-10 '
+            >
               Reset Password
-            </button>
+            </Button>
 
             <Link
               to='/sign-in'
