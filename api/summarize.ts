@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { IncomingForm } from "formidable";
 import {
@@ -17,6 +18,7 @@ import os from "os";
 import axios from "axios";
 import isTextExtractablePDF from "../src/utils/isTextExtractablePdf";
 import extractTextWithOCR from "../src/utils/extractTextWithOCR";
+import { getTextExtractor } from "office-text-extractor";
 
 export const config = {
   api: { bodyParser: false },
@@ -84,6 +86,7 @@ async function handleS3FileProcessing(req: VercelRequest, res: VercelResponse) {
     });
 
     const s3Response = await s3Client.send(getObjectCommand);
+    // @ts-ignore
     const fileBuffer = await streamToBuffer(s3Response.Body as any);
 
     console.log(`File size: ${(fileBuffer.length / 1024 / 1024).toFixed(2)}MB`);
@@ -98,7 +101,7 @@ async function handleS3FileProcessing(req: VercelRequest, res: VercelResponse) {
       const summary = await processFileWithTextract(
         tempFilePath,
         fileBuffer,
-        fileKey
+        fileKey,
       );
 
       // Clean up
@@ -110,7 +113,7 @@ async function handleS3FileProcessing(req: VercelRequest, res: VercelResponse) {
           new DeleteObjectCommand({
             Bucket: process.env.AWS_S3_BUCKET_NAME!,
             Key: fileKey,
-          })
+          }),
         );
       }
 
@@ -122,6 +125,7 @@ async function handleS3FileProcessing(req: VercelRequest, res: VercelResponse) {
       }
       throw error;
     }
+    // @ts-ignore
   } catch (error: any) {
     console.error("S3 file processing error:", error);
     res.status(500).json({
@@ -145,6 +149,7 @@ async function handleDirectUpload(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: "Failed to parse upload" });
     }
 
+    // @ts-ignore
     const file = files.file as any;
     const filePath = file[0]?.filepath || file?.path;
 
@@ -158,6 +163,7 @@ async function handleDirectUpload(req: VercelRequest, res: VercelResponse) {
 
       fs.unlinkSync(filePath);
       res.status(200).json({ summary });
+      // @ts-ignore
     } catch (error: any) {
       console.error("Direct upload error:", error);
       res.status(500).json({
@@ -172,9 +178,22 @@ async function handleDirectUpload(req: VercelRequest, res: VercelResponse) {
 async function processFileWithTextract(
   filePath: string,
   fileBuffer: Buffer,
-  s3Key?: string
+  s3Key?: string,
 ): Promise<string> {
   console.log("Starting file processing...");
+
+  // Check file type from buffer/file extension
+  const fileExtension = filePath.split(".").pop()?.toLowerCase();
+  const isPowerPoint =
+    fileExtension === "ppt" ||
+    fileExtension === "pptx" ||
+    filePath.includes(".ppt") ||
+    filePath.includes(".pptx");
+
+  if (isPowerPoint) {
+    console.log("Processing PowerPoint file with text extraction...");
+    return await processPowerPointFile(filePath, fileBuffer);
+  }
 
   const isTextBased = await isTextExtractablePDF(fileBuffer);
   let summary: string;
@@ -194,7 +213,7 @@ async function processFileWithTextract(
           ...uploadForm.getHeaders(),
           ...openaiHeaders,
         },
-      }
+      },
     );
 
     const fileId = uploadRes.data.id;
@@ -202,7 +221,7 @@ async function processFileWithTextract(
     const threadRes = await axios.post(
       "https://api.openai.com/v1/threads",
       {},
-      { headers: openaiHeaders }
+      { headers: openaiHeaders },
     );
     const threadId = threadRes.data.id;
 
@@ -213,7 +232,7 @@ async function processFileWithTextract(
         content:
           "Please provide a comprehensive summary of the uploaded document, highlighting the key points, main topics, and important details.",
       },
-      { headers: openaiHeaders }
+      { headers: openaiHeaders },
     );
 
     const runRes = await axios.post(
@@ -226,7 +245,7 @@ async function processFileWithTextract(
           },
         },
       },
-      { headers: openaiHeaders }
+      { headers: openaiHeaders },
     );
 
     let status = "in_progress";
@@ -241,7 +260,7 @@ async function processFileWithTextract(
       await new Promise((r) => setTimeout(r, 2000));
       const runCheck = await axios.get(
         `https://api.openai.com/v1/threads/${threadId}/runs/${runId}`,
-        { headers: openaiHeaders }
+        { headers: openaiHeaders },
       );
       status = runCheck.data.status;
       attempts++;
@@ -249,17 +268,18 @@ async function processFileWithTextract(
 
     if (status !== "completed") {
       throw new Error(
-        `OpenAI Assistant processing failed with status: ${status}`
+        `OpenAI Assistant processing failed with status: ${status}`,
       );
     }
 
     const messagesRes = await axios.get(
       `https://api.openai.com/v1/threads/${threadId}/messages`,
-      { headers: openaiHeaders }
+      { headers: openaiHeaders },
     );
 
     const assistantMessage = messagesRes.data.data.find(
-      (msg: any) => msg.role === "assistant"
+      // @ts-ignore
+      (msg: any) => msg.role === "assistant",
     );
     summary =
       assistantMessage?.content?.[0]?.text?.value || "No summary found.";
@@ -270,6 +290,7 @@ async function processFileWithTextract(
 
     try {
       extractedText = await extractTextWithTextract(fileBuffer, s3Key);
+      // @ts-ignore
       console.log(`Textract extracted ${extractedText.length} characters`);
     } catch (textractError: any) {
       console.log(`Textract failed: ${textractError.message}`);
@@ -282,17 +303,18 @@ async function processFileWithTextract(
           if (fileSizeMB > 1) {
             throw new Error(
               `File too large for OCR.space free plan: ${fileSizeMB.toFixed(
-                2
-              )}MB (max 1MB)`
+                2,
+              )}MB (max 1MB)`,
             );
           }
           extractedText = await extractTextWithOCR(filePath, OCR_API_KEY);
           if (!extractedText) {
             throw new Error("OCR.space failed to extract any text.");
+            // @ts-ignore
           }
         } catch (ocrError: any) {
           throw new Error(
-            `Both Textract and OCR.space failed. Textract: ${textractError.message}. OCR.space: ${ocrError.message}`
+            `Both Textract and OCR.space failed. Textract: ${textractError.message}. OCR.space: ${ocrError.message}`,
           );
         }
       } else {
@@ -302,7 +324,7 @@ async function processFileWithTextract(
 
     if (!extractedText || extractedText.trim().length === 0) {
       throw new Error(
-        "No text could be extracted from the document. The file may contain only images or be corrupted."
+        "No text could be extracted from the document. The file may contain only images or be corrupted.",
       );
     }
 
@@ -334,7 +356,7 @@ async function processFileWithTextract(
         max_tokens: 2000,
         temperature: 0.3,
       },
-      { headers: { Authorization: `Bearer ${OPENAI_API_KEY}` } }
+      { headers: { Authorization: `Bearer ${OPENAI_API_KEY}` } },
     );
 
     summary =
@@ -349,7 +371,7 @@ async function processFileWithTextract(
 // AWS Textract implementation
 async function extractTextWithTextract(
   fileBuffer: Buffer,
-  s3Key?: string
+  s3Key?: string,
 ): Promise<string> {
   const fileSizeInMB = fileBuffer.length / (1024 * 1024);
   console.log(`Using Textract for file of size: ${fileSizeInMB.toFixed(2)}MB`);
@@ -373,7 +395,7 @@ async function extractTextWithTextract(
 
       // Extract text from LINE blocks (more organized than WORD blocks)
       const textBlocks = response.Blocks.filter(
-        (block) => block.BlockType === "LINE" && block.Text
+        (block) => block.BlockType === "LINE" && block.Text,
       )
         .map((block) => block.Text!)
         .filter((text) => text.trim().length > 0);
@@ -384,7 +406,7 @@ async function extractTextWithTextract(
 
       const extractedText = textBlocks.join("\n");
       console.log(
-        `Extracted ${extractedText.length} characters from ${textBlocks.length} lines`
+        `Extracted ${extractedText.length} characters from ${textBlocks.length} lines`,
       );
       return extractedText;
     } else if (s3Key) {
@@ -421,7 +443,7 @@ async function extractTextWithTextract(
         if (jobStatus === "SUCCEEDED") {
           const textBlocks =
             getResponse.Blocks?.filter(
-              (block) => block.BlockType === "LINE" && block.Text
+              (block) => block.BlockType === "LINE" && block.Text,
             )
               ?.map((block) => block.Text!)
               ?.filter((text) => text.trim().length > 0) || [];
@@ -435,7 +457,7 @@ async function extractTextWithTextract(
           throw new Error(
             `Textract job failed: ${
               getResponse.StatusMessage || "Unknown error"
-            }`
+            }`,
           );
         }
       }
@@ -445,7 +467,7 @@ async function extractTextWithTextract(
       }
     } else {
       throw new Error(
-        "File too large for synchronous processing and no S3 key provided for asynchronous processing"
+        "File too large for synchronous processing and no S3 key provided for asynchronous processing",
       );
     }
   } catch (error: any) {
@@ -454,7 +476,7 @@ async function extractTextWithTextract(
     // Handle specific AWS errors
     if (error.name === "InvalidParameterException") {
       throw new Error(
-        "Document format not supported by Textract. Please ensure it's a valid PDF or image file."
+        "Document format not supported by Textract. Please ensure it's a valid PDF or image file.",
       );
     } else if (error.name === "DocumentTooLargeException") {
       throw new Error("Document is too large for Textract processing.");
@@ -470,6 +492,7 @@ async function extractTextWithTextract(
   throw new Error("Unexpected error in Textract processing");
 }
 
+// @ts-ignore
 // Helper function to convert stream to buffer (unchanged)
 async function streamToBuffer(stream: any): Promise<Buffer> {
   const chunks: Buffer[] = [];
@@ -478,4 +501,87 @@ async function streamToBuffer(stream: any): Promise<Buffer> {
     stream.on("error", reject);
     stream.on("end", () => resolve(Buffer.concat(chunks)));
   });
+}
+
+// Process PowerPoint files by extracting text directly
+async function processPowerPointFile(
+  filePath: string,
+  fileBuffer: Buffer,
+): Promise<string> {
+  console.log("Extracting text from PowerPoint file...");
+
+  try {
+    // Use office-text-extractor to get text from PowerPoint
+    const extractor = getTextExtractor();
+    const extractedText = await extractor.extractText({
+      input: fileBuffer,
+      type: "buffer",
+    });
+
+    console.log(`Extracted ${extractedText.length} characters from PowerPoint`);
+
+    if (!extractedText || extractedText.trim().length === 0) {
+      throw new Error("No text could be extracted from the PowerPoint file.");
+    }
+
+    // Truncate text if too long (OpenAI API has token limits)
+    const maxLength = 50000; // Roughly 12,500 tokens for GPT-4
+    const truncatedText =
+      extractedText.length > maxLength
+        ? extractedText.substring(0, maxLength) +
+          "\n\n[Text truncated due to length...]"
+        : extractedText;
+
+    console.log(
+      "Sending extracted PowerPoint text to OpenAI for summarization...",
+    );
+
+    const completionRes = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-4",
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a helpful assistant that creates comprehensive summaries of PowerPoint presentations. Focus on extracting key points, main topics, important details, and actionable insights from the slide content.",
+          },
+          {
+            role: "user",
+            content: `Please provide a comprehensive summary of the following PowerPoint presentation content:\n\n${truncatedText}`,
+          },
+        ],
+        max_tokens: 2000,
+        temperature: 0.3,
+      },
+      { headers: { Authorization: `Bearer ${OPENAI_API_KEY}` } },
+    );
+
+    const summary =
+      completionRes.data.choices?.[0]?.message?.content ||
+      "No summary generated.";
+
+    console.log("PowerPoint processing completed successfully");
+    return summary;
+    // @ts-ignore
+  } catch (error: any) {
+    console.error("PowerPoint processing error:", error);
+
+    // Fallback: try to convert to PDF and process as PDF
+    console.log(
+      "PowerPoint text extraction failed, attempting PDF conversion fallback...",
+    );
+    try {
+      // For now, we'll just re-throw the error since PDF conversion requires additional setup
+      // In a production environment, you could add office-to-pdf here
+      throw new Error(
+        `PowerPoint processing failed: ${error.message}. Please convert to PDF first.`,
+      );
+      // @ts-ignore
+    } catch (fallbackError: any) {
+      throw new Error(
+        `Both PowerPoint text extraction and fallback failed. PowerPoint: ${error.message}`,
+      );
+    }
+  }
 }

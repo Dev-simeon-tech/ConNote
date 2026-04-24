@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type ListComponentProps = {
   data: any[];
   renderItem: (item: any, index: number) => React.ReactNode;

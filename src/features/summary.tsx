@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useContext, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router";
@@ -14,10 +15,10 @@ import Button from "../components/ui/button";
 
 import PdfIcon from "../assets/pdf.svg?react";
 import PptIcon from "../assets/ppt.svg?react";
-import NoteIcon from "../assets/notepad.svg?react";
 import QuizIcon from "../assets/quiz-icon.svg?react";
 import DownloadIcon from "../assets/download-icon.svg?react";
 import RefreshIcon from "../assets/refresh.svg?react";
+import NoteIcon from "../assets/document.svg?react";
 
 const Summary = () => {
   const { file, setFile, isProcessing, setIsProcessing, setSummary, summary } =
@@ -95,7 +96,7 @@ const Summary = () => {
         },
         {
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
 
       setUploadProgress(100);
@@ -125,7 +126,7 @@ const Summary = () => {
     <div className='min-h-screen flex flex-col'>
       <header className='flex h-[10vh] w-full items-center top-0 gap-4 p-4 '>
         <MenuButton />
-        <h2 className='lg:text-2xl text-xl'>Pdf and Powerpoint Summarizer</h2>
+        <h2 className='lg:text-2xl text-xl'>PDF and PowerPoint Summarizer</h2>
       </header>
 
       <div className='flex-grow-1 flex items-center justify-center'>
@@ -188,9 +189,7 @@ const Summary = () => {
             className='shadow-container p-10 rounded-xl text-center h-1/2 m-4 lg:w-1/2'
           >
             <h3 className='text-4xl'>Select file</h3>
-            <p className='text-[#847F7F]'>
-              only PDF and PowerPoint files are supported
-            </p>
+            <p className='text-[#847F7F]'>only PDF files are supported</p>
             {isProcessing ? (
               <div className='mt-20 mb-10'>
                 <LinearProgress

@@ -38,16 +38,6 @@ const Currency = () => {
     refetchRates();
   };
 
-  if (errorCurrency || errorRates) {
-    return (
-      <Error>
-        <h2 className='text-3xl'>Something went wrong!</h2>
-        <Button variant='inverted' onClick={() => refetchData()}>
-          Refetch
-        </Button>
-      </Error>
-    );
-  }
   const currenciesArray = useMemo(
     () =>
       currencies?.data
@@ -62,7 +52,7 @@ const Currency = () => {
             })
             .sort((a, b) => a.name.localeCompare(b.name))
         : [],
-    [currencies]
+    [currencies],
   );
   const [fromCurrency, setFromCurrency] = useState("");
   const [toCurrency, setToCurrency] = useState("");
@@ -70,10 +60,10 @@ const Currency = () => {
   const [inputCurrency, setInputCurrency] = useState("0");
 
   const dynamicResultSize = getDynamicFontSize(
-    getFormattedUnitValue(convertedCurrency).length
+    getFormattedUnitValue(convertedCurrency).length,
   );
   const dynamicInputSize = getDynamicInputFontSize(
-    getFormattedNumber(inputCurrency).length
+    getFormattedNumber(inputCurrency).length,
   );
 
   useEffect(() => {
@@ -87,21 +77,32 @@ const Currency = () => {
     if (inputCurrency === "" || inputCurrency === "0.") return;
 
     const fromCode = currenciesArray.find(
-      (currencies) => currencies.name === fromCurrency
+      (currencies) => currencies.name === fromCurrency,
     )?.code;
     const toCode = currenciesArray.find(
-      (currencies) => currencies.name === toCurrency
+      (currencies) => currencies.name === toCurrency,
     )?.code;
 
     if (fromCode && toCode) {
       const convertedValue = convertCurrency(
         parseFloat(inputCurrency),
         rates.data[fromCode].value,
-        rates.data[toCode].value
+        rates.data[toCode].value,
       );
       setConvertedCurrency(convertedValue);
     }
   }, [inputCurrency, fromCurrency, toCurrency, currenciesArray, rates]);
+
+  if (errorCurrency || errorRates) {
+    return (
+      <Error>
+        <h2 className='text-3xl'>Something went wrong!</h2>
+        <Button variant='inverted' onClick={() => refetchData()}>
+          Refetch
+        </Button>
+      </Error>
+    );
+  }
 
   if (
     loadingCurrency ||
@@ -130,7 +131,7 @@ const Currency = () => {
                 {
                   currenciesArray[
                     currenciesArray.findIndex(
-                      (currencies) => currencies.name === fromCurrency
+                      (currencies) => currencies.name === fromCurrency,
                     )
                   ]?.symbol_native
                 }
@@ -164,7 +165,7 @@ const Currency = () => {
                 {
                   currenciesArray[
                     currenciesArray.findIndex(
-                      (currencies) => currencies.name === toCurrency
+                      (currencies) => currencies.name === toCurrency,
                     )
                   ]?.symbol_native
                 }

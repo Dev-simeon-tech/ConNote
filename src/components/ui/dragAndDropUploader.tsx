@@ -35,7 +35,7 @@ const DragAndDropUploader = () => {
         }
       }
     },
-    [setFile]
+    [setFile],
   );
 
   const onClickHandler = () => {

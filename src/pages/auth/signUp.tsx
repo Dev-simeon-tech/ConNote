@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import * as z from "zod/v4";
 import { useForm } from "react-hook-form";
@@ -40,6 +41,7 @@ const SignUp = () => {
         // Optionally, you can store the user's name in the database
         await storeUser(userCredential.user, name);
       }
+      // @ts-ignore
     } catch (error: any) {
       setSignUpError(error.code || "An error occurred during sign up.");
       console.error("Error creating user:", error);

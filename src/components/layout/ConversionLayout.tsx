@@ -42,7 +42,7 @@ const ConversionLayout = <T,>({
       toUnit
     );
     setConvertedUnit(convertedValue);
-  }, [inputUnit, fromUnit, toUnit]);
+  }, [inputUnit, fromUnit, toUnit, conversionFunc]);
 
   return (
     <>

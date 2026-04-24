@@ -21,20 +21,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Validate file type
     const allowedTypes = [
       "application/pdf",
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      "application/vnd.ms-powerpoint",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation", // .pptx
+      "application/vnd.ms-powerpoint", // .ppt
     ];
 
     if (!allowedTypes.includes(fileType)) {
-      return res
-        .status(400)
-        .json({ error: "Only PDF and PowerPoint files are supported" });
+      return res.status(400).json({
+        error: "Only PDF and PowerPoint files are supported",
+      });
     }
 
     // Generate unique key for the file
     const key = `uploads/${Date.now()}-${fileName.replace(
       /[^a-zA-Z0-9.-]/g,
-      "_"
+      "_",
     )}`;
 
     // Create presigned URL for upload
