@@ -86,7 +86,7 @@ async function handleS3FileProcessing(req: VercelRequest, res: VercelResponse) {
     });
 
     const s3Response = await s3Client.send(getObjectCommand);
-    // @ts-ignore
+
     const fileBuffer = await streamToBuffer(s3Response.Body as any);
 
     console.log(`File size: ${(fileBuffer.length / 1024 / 1024).toFixed(2)}MB`);
@@ -125,7 +125,6 @@ async function handleS3FileProcessing(req: VercelRequest, res: VercelResponse) {
       }
       throw error;
     }
-    // @ts-ignore
   } catch (error: any) {
     console.error("S3 file processing error:", error);
     res.status(500).json({
@@ -149,7 +148,6 @@ async function handleDirectUpload(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: "Failed to parse upload" });
     }
 
-    // @ts-ignore
     const file = files.file as any;
     const filePath = file[0]?.filepath || file?.path;
 
@@ -163,7 +161,6 @@ async function handleDirectUpload(req: VercelRequest, res: VercelResponse) {
 
       fs.unlinkSync(filePath);
       res.status(200).json({ summary });
-      // @ts-ignore
     } catch (error: any) {
       console.error("Direct upload error:", error);
       res.status(500).json({
@@ -249,7 +246,7 @@ async function processFileWithTextract(
     );
 
     let status = "in_progress";
-    let runId = runRes.data.id;
+    const runId = runRes.data.id;
     let attempts = 0;
     const maxAttempts = 30; // 1 minute timeout
 
@@ -278,7 +275,6 @@ async function processFileWithTextract(
     );
 
     const assistantMessage = messagesRes.data.data.find(
-      // @ts-ignore
       (msg: any) => msg.role === "assistant",
     );
     summary =
@@ -290,7 +286,7 @@ async function processFileWithTextract(
 
     try {
       extractedText = await extractTextWithTextract(fileBuffer, s3Key);
-      // @ts-ignore
+
       console.log(`Textract extracted ${extractedText.length} characters`);
     } catch (textractError: any) {
       console.log(`Textract failed: ${textractError.message}`);
@@ -310,7 +306,6 @@ async function processFileWithTextract(
           extractedText = await extractTextWithOCR(filePath, OCR_API_KEY);
           if (!extractedText) {
             throw new Error("OCR.space failed to extract any text.");
-            // @ts-ignore
           }
         } catch (ocrError: any) {
           throw new Error(
@@ -492,7 +487,6 @@ async function extractTextWithTextract(
   throw new Error("Unexpected error in Textract processing");
 }
 
-// @ts-ignore
 // Helper function to convert stream to buffer (unchanged)
 async function streamToBuffer(stream: any): Promise<Buffer> {
   const chunks: Buffer[] = [];
@@ -563,7 +557,6 @@ async function processPowerPointFile(
 
     console.log("PowerPoint processing completed successfully");
     return summary;
-    // @ts-ignore
   } catch (error: any) {
     console.error("PowerPoint processing error:", error);
 
@@ -577,10 +570,9 @@ async function processPowerPointFile(
       throw new Error(
         `PowerPoint processing failed: ${error.message}. Please convert to PDF first.`,
       );
-      // @ts-ignore
     } catch (fallbackError: any) {
       throw new Error(
-        `Both PowerPoint text extraction and fallback failed. PowerPoint: ${error.message}`,
+        `Both PowerPoint text extraction and fallback failed. PowerPoint: ${error.message ?? fallbackError}`,
       );
     }
   }
