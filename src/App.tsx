@@ -1,13 +1,11 @@
 import { Suspense, lazy } from "react";
-import { Route, Routes } from "react-router";
+import { Route, Routes, Navigate } from "react-router";
 
 import Home from "./pages/app/home";
 import NotFound from "./pages/notFound";
 
 import Spinner from "./components/ui/spinner";
-
-const About = lazy(() => import("./pages/app/about"));
-const Tools = lazy(() => import("./pages/app/tools"));
+import SidebarLayout from "./components/layout/sidebarLayout";
 const SignIn = lazy(() => import("./pages/auth/signIn"));
 const SignUp = lazy(() => import("./pages/auth/signUp"));
 const ForgotPassword = lazy(() => import("./pages/auth/forgotPassword"));
@@ -17,9 +15,10 @@ function App() {
   return (
     <Suspense fallback={<Spinner />}>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/tools/*' element={<Tools />} />
+        <Route element={<SidebarLayout />}>
+          <Route index path='/' element={<Navigate to='/home' replace />} />
+          <Route index path='/home' element={<Home />} />
+        </Route>
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
