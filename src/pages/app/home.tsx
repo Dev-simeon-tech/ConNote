@@ -53,26 +53,28 @@ const convertersData = [
 const Home = () => {
   return (
     <div className='p-4 lg:p-8 bg-bg flex-1 flex-col flex'>
-      <main className=' bg-surface p-12 rounded-4xl '>
-        <Badge className='bg-[#85F8C4] text-[#002114] py-2.5 font-bold tracking-widest'>
-          PRECISION INTELLIGENCE
-        </Badge>
-        <div className='mt-6'>
-          <h1 className='text-6xl font-bold max-w-[10ch] text-text-heading'>
-            Welcome to ConNote
-          </h1>
-          <p className='pt-4 pb-6 text-lg max-w-[48ch] leading-8 text-text-body'>
-            Make learning easier with our all-in-one educational toolkit — from
-            unit converters to AI-powered PDF/PowerPoint summarizers and quiz
-            qenerator. Whether you're a student, teacher, or curious learner,
-            our tools save time and boost understanding instantly.
-          </p>
-          <Link to={"/converters"}>
-            <Button size={"lg"} className='py-6.5 px-6 group'>
-              <span className='text-base'>Explore Converters</span>
-              <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform' />
-            </Button>
-          </Link>
+      <main className=' bg-surface p-12 rounded-4xl flex  '>
+        <div className='flex flex-col justify-center items-center lg:items-start text-center lg:text-left max-w-2xl '>
+          <Badge className='bg-[#85F8C4] text-[#002114] py-2.5 font-bold tracking-widest'>
+            PRECISION INTELLIGENCE
+          </Badge>
+          <div className='mt-6'>
+            <h1 className='lg:text-6xl text-3xl mx-auto lg:mx-0 font-bold max-w-[10ch] text-text-heading'>
+              Welcome to ConNote
+            </h1>
+            <p className='pt-4 pb-6 mx-auto lg:mx-0 text-lg max-w-[48ch] leading-8 text-text-body'>
+              Make learning easier with our all-in-one educational toolkit —
+              from unit converters to AI-powered PDF/PowerPoint summarizers and
+              quiz qenerator. Whether you're a student, teacher, or curious
+              learner, our tools save time and boost understanding instantly.
+            </p>
+            <Link to={"/converters"}>
+              <Button size={"lg"} className='py-6.5 px-6 group'>
+                <span className='text-base'>Explore Converters</span>
+                <ArrowRight className='ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform' />
+              </Button>
+            </Link>
+          </div>
         </div>
       </main>
       <section className='mt-12'>
@@ -85,7 +87,7 @@ const Home = () => {
           </h2>
         </div>
 
-        <div className='mt-8 flex flex-wrap  gap-10'>
+        <div className='mt-8 flex flex-wrap gap-10'>
           {convertersData.map((converter, index) => {
             const Icon = converter.icon;
             return (
@@ -121,12 +123,12 @@ const Home = () => {
           </h2>
         </div>
 
-        <div className='flex gap-5 mt-8'>
-          <div className='bg-surface p-10 flex-1 flex items-center gap-8 rounded-4xl'>
+        <div className='flex gap-5 mt-8 flex-col md:flex-row'>
+          <div className='aiToolsContainer'>
             <div className='p-5 rounded-2xl bg-primary'>
               <FileText className='text-white w-10 h-10' />
             </div>
-            <div>
+            <div className='flex flex-col items-center lg:items-start'>
               <h3 className='font-bold text-2xl text-text-heading'>
                 PDF & PPT Summarizer
               </h3>
@@ -135,7 +137,7 @@ const Home = () => {
                 summary in seconds.
               </p>
               <Link
-                className='flex items-center gap-2 group text-primary font-bold'
+                className='flex items-center w-fit mt-4 gap-2 group text-primary font-bold'
                 to={"/tools/summary"}
               >
                 <span>Try AI summary</span>
@@ -143,11 +145,11 @@ const Home = () => {
               </Link>
             </div>
           </div>
-          <div className='bg-surface p-10 flex-1 flex items-center gap-8 rounded-4xl'>
+          <div className='aiToolsContainer'>
             <div className='p-5 rounded-2xl bg-primary'>
               <CircleQuestionMark className='text-white w-10 h-10' />
             </div>
-            <div>
+            <div className='flex flex-col items-center lg:items-start'>
               <div className='flex items-center gap-2'>
                 <h3 className='font-bold text-2xl text-text-heading'>
                   Quiz Generator
@@ -162,7 +164,7 @@ const Home = () => {
                 over time.
               </p>
               <Link
-                className='flex items-center gap-2 group text-primary font-bold'
+                className='flex items-center w-fit mt-4 gap-2 group text-primary font-bold'
                 to={"/tools/quiz"}
               >
                 <span>Try AI Quiz</span>

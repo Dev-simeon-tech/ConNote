@@ -1,7 +1,7 @@
 import { createContext, type ReactNode, useState, useEffect } from "react";
 
 // import type { User } from "firebase/auth";
-import { supabase } from "@/lib/supabase/supabaseClient";
+import { supabase, upsertUserFromAuth } from "@/lib/supabase/supabaseClient";
 import type { User } from "@supabase/supabase-js";
 // import { authStateChangedlistener, storeUser } from "../lib/firebase/firebase";
 
@@ -21,12 +21,20 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
       if (event === "SIGNED_OUT") {
         setUser(null);
         return;
+      } else if (
+        event === "SIGNED_IN" &&
+        session &&
+        session.user.app_metadata.provider === "google"
+      ) {
+        upsertUserFromAuth(session.user);
       }
       const user = session?.user || null;
       setUser(user);
-      console.log(session);
     });
-    return () => subscription.unsubscribe();
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const value = {

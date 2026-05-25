@@ -8,8 +8,13 @@ import { Separator } from "@base-ui/react";
 import { Outlet } from "react-router";
 import { Button } from "../ui/button";
 import { Link } from "react-router";
+import { ProfileDropdown } from "../profileDropdown";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import useUser from "@/hooks/useUser";
 
 const SidebarLayout = () => {
+  const { user } = useUser();
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -31,14 +36,33 @@ const SidebarLayout = () => {
               id=''
             />
             <div className='ml-auto flex gap-4 items-center'>
-              <Link to={"/login"}>
-                <button>Log In</button>
-              </Link>
-              <Link to={"/signup"}>
-                <Button className={"px-6 "} size={"lg"}>
-                  Sign Up
-                </Button>
-              </Link>
+              {user ? (
+                <ProfileDropdown
+                  Trigger={
+                    <Avatar>
+                      <AvatarImage
+                        referrerPolicy='no-referrer'
+                        src={user.user_metadata.picture}
+                      />
+                      <AvatarFallback className={"text-primary  text-xl"}>
+                        {user.user_metadata.name?.charAt(0) ||
+                          user.user_metadata.display_name?.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                  }
+                />
+              ) : (
+                <>
+                  <Link to={"/login"}>
+                    <button>Log In</button>
+                  </Link>
+                  <Link to={"/signup"}>
+                    <Button className={"px-6 "} size={"lg"}>
+                      Sign Up
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </header>
