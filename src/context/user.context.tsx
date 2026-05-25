@@ -1,7 +1,9 @@
 import { createContext, type ReactNode, useState, useEffect } from "react";
 
-import type { User } from "firebase/auth";
-import { authStateChangedlistener, storeUser } from "../lib/firebase/firebase";
+// import type { User } from "firebase/auth";
+import { supabase, upsertUserFromAuth } from "@/lib/supabase/supabaseClient";
+import type { User } from "@supabase/supabase-js";
+// import { authStateChangedlistener, storeUser } from "../lib/firebase/firebase";
 
 export type UserContextType = {
   user: User | null;
@@ -13,13 +15,26 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = authStateChangedlistener((user) => {
-      if (user) {
-        storeUser(user);
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_OUT") {
+        setUser(null);
+        return;
+      } else if (
+        event === "SIGNED_IN" &&
+        session &&
+        session.user.app_metadata.provider === "google"
+      ) {
+        upsertUserFromAuth(session.user);
       }
+      const user = session?.user || null;
       setUser(user);
     });
-    return () => unsubscribe();
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   const value = {

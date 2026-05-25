@@ -2,7 +2,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
+import { AlertContextProvider } from "./context/alert.context";
 import { UserContextProvider } from "./context/user.context";
 import { registerSW } from "virtual:pwa-register";
 import App from "./App.tsx";
@@ -21,10 +23,14 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <UserContextProvider>
-          <App />
-        </UserContextProvider>
+        <AlertContextProvider>
+          <UserContextProvider>
+            <TooltipProvider>
+              <App />
+            </TooltipProvider>
+          </UserContextProvider>
+        </AlertContextProvider>
       </QueryClientProvider>
     </BrowserRouter>
-  </StrictMode>
+  </StrictMode>,
 );
