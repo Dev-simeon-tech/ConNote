@@ -6,7 +6,8 @@ import NotFound from "./pages/notFound";
 
 import Spinner from "./components/ui/spinner";
 import SidebarLayout from "./components/layout/sidebarLayout";
-const SignIn = lazy(() => import("./pages/auth/signIn"));
+import { Alert } from "./components/ui/alert";
+const LogIn = lazy(() => import("./pages/auth/logIn"));
 const SignUp = lazy(() => import("./pages/auth/signUp"));
 const ForgotPassword = lazy(() => import("./pages/auth/forgotPassword"));
 const Quiz = lazy(() => import("./pages/app/quiz"));
@@ -14,13 +15,14 @@ const Quiz = lazy(() => import("./pages/app/quiz"));
 function App() {
   return (
     <Suspense fallback={<Spinner />}>
+      <Alert />
       <Routes>
         <Route element={<SidebarLayout />}>
           <Route index path='/' element={<Navigate to='/home' replace />} />
           <Route index path='/home' element={<Home />} />
         </Route>
-        <Route path='/sign-in' element={<SignIn />} />
-        <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/login' element={<LogIn />} />
+        <Route path='/signup' element={<SignUp />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/quiz' element={<Quiz />} />
         <Route path='*' element={<NotFound />} />
