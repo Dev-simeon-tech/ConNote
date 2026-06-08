@@ -1,19 +1,16 @@
 "use client";
 
 import * as React from "react";
-
 import { NavMain } from "@/components/nav-main";
 // import { NavProjects } from "@/components/nav-projects";
-import { NavUser } from "@/components/nav-user";
+
 import Logo from "@/assets/logo.svg?react";
 import Sparkler from "@/assets/sparkler.svg?react";
 import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
-  SidebarRail,
 } from "@/components/ui/sidebar";
 import {
   ArrowLeftRight,
@@ -46,6 +43,7 @@ const data = {
     {
       title: "Converters",
       url: "/converters",
+      isActive: true,
       icon: <ArrowLeftRight />,
       items: [
         {
@@ -75,6 +73,10 @@ const data = {
         {
           title: "Speed",
           url: "/converters/speed",
+        },
+        {
+          title: "Conversion History",
+          url: "/converters/history",
         },
       ],
     },
@@ -109,23 +111,6 @@ const data = {
       icon: <Settings2Icon />,
     },
   ],
-  // projects: [
-  //   {
-  //     name: "Design Engineering",
-  //     url: "#",
-  //     icon: <FrameIcon />,
-  //   },
-  //   {
-  //     name: "Sales & Marketing",
-  //     url: "#",
-  //     icon: <PieChartIcon />,
-  //   },
-  //   {
-  //     name: "Travel",
-  //     url: "#",
-  //     icon: <MapIcon />,
-  //   },
-  // ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -136,12 +121,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent className='text-sidebar-text bg-surface'>
         <NavMain items={data.navMain} />
-        {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
-      <SidebarFooter className='bg-surface'>
-        <NavUser user={data.user} />
-      </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
   );
 }

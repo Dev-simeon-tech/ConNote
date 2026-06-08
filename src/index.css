@@ -41,6 +41,16 @@
   .aiToolsContainer {
     @apply bg-surface p-10 flex-1 flex flex-col lg:flex-row items-center text-center lg:text-left gap-8 rounded-4xl;
   }
+  .unit-option::before {
+    content: "";
+    @apply absolute hidden w-1 h-5 top-1/2 left-0 -translate-y-1/2 bg-primary rounded-full;
+  }
+  .unit-option.active::before {
+    @apply block;
+  }
+  .converter-label {
+    @apply pb-3 text-text-muted font-bold uppercase text-sm tracking-wider;
+  }
 }
 
 @theme inline {

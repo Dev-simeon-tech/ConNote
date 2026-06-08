@@ -7,54 +7,15 @@ import {
   CircleQuestionMark,
 } from "lucide-react";
 import { Link } from "react-router";
+import { convertersData } from "@/data/convertersData";
 
-import LengthIcon from "@/assets/Length.svg?react";
-import TempIcon from "@/assets/temp.svg?react";
-import WeightIcon from "@/assets/weight.svg?react";
-import SpeedIcon from "@/assets/speed.svg?react";
-import TimeIcon from "@/assets/time.svg?react";
-import CurrencyIcon from "@/assets/currency.svg?react";
-import AreaIcon from "@/assets/area.svg?react";
 import Sparkler from "@/assets/sparkler.svg?react";
-
-const convertersData = [
-  {
-    name: "Length",
-    icon: LengthIcon,
-    badge: "popular",
-  },
-  {
-    name: "Currency",
-    icon: CurrencyIcon,
-    badge: "Live",
-  },
-  {
-    name: "Weight",
-    icon: WeightIcon,
-  },
-  {
-    name: "Temp",
-    icon: TempIcon,
-  },
-  {
-    name: "Area",
-    icon: AreaIcon,
-  },
-  {
-    name: "Time",
-    icon: TimeIcon,
-  },
-  {
-    name: "Speed",
-    icon: SpeedIcon,
-  },
-];
 
 const Home = () => {
   return (
     <div className='p-4 lg:p-8 bg-bg flex-1 flex-col flex'>
-      <main className=' bg-surface p-12 rounded-4xl flex  '>
-        <div className='flex flex-col justify-center items-center lg:items-start text-center lg:text-left max-w-2xl '>
+      <main className=' bg-surface lg:p-12 px-4 py-10 rounded-4xl flex  '>
+        <div className='flex flex-col justify-center items-center lg:items-start text-center lg:text-left lg:max-w-2xl '>
           <Badge className='bg-[#85F8C4] text-[#002114] py-2.5 font-bold tracking-widest'>
             PRECISION INTELLIGENCE
           </Badge>
@@ -94,7 +55,7 @@ const Home = () => {
               <Link
                 className='flex-1 bg-white/20 p-8 rounded-4xl hover:shadow-xl shadow-md '
                 key={index}
-                to={`/${converter.name.toLowerCase()}`}
+                to={`/converters/${converter.name.toLowerCase()}`}
               >
                 <div className=' flex flex-col   items-center'>
                   <div className=' bg-primary-subtle py-3 px-4 rounded-2xl flex items-center justify-center'>
