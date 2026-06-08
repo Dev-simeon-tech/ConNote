@@ -26,21 +26,24 @@ const Dropdown = <T,>({
     setIsOpen(false);
   }, [currentItem]);
   return (
-    <div ref={dropdownRef}>
+    <div ref={dropdownRef} className='relative inline-block'>
       <button
+        type='button'
         onClick={() => setIsOpen(!isOpen)}
-        className='flex gap-2 items-center'
+        className='flex gap-2 items-center shadow-lg  bg-white px-4 py-2 rounded-md'
       >
-        <p className='capitalize text-xl'>{String(currentItem)}</p>
+        <p className='capitalize text-[14px] font-semibold'>
+          {String(currentItem)}
+        </p>
         <ArrowIcon width={"1.5rem"} height={"1.5rem"} />
       </button>
       <div
         role='listbox'
         aria-expanded={isOpen}
-        className={`flex bg-gray z-20 w-fit rounded-md gap-1 -top-1/2 -translate-y-1/2 transition-all flex-col absolute ${
+        className={`absolute left-0 top-full max-h-100 divide-y-1 text-[14px] min-w-50  mt-2 z-20 w-full rounded-md gap-1 flex flex-col transition-transform  ${
           isOpen
-            ? "max-h-[25rem] overflow-y-auto p-1"
-            : "max-h-0 overflow-y-hidden"
+            ? "scale-100 p-1 bg-white shadow-lg overflow-y-auto "
+            : "scale-0  overflow-y-hidden "
         }`}
       >
         <ListComponent data={itemsArr} renderItem={renderItem} />

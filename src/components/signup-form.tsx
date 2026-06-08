@@ -29,7 +29,7 @@ import {
   storeUserData,
   signInWithGoogle,
 } from "@/lib/supabase/supabaseClient";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Spinner } from "./ui/spinner";
 
 import GoogleIcon from "@/assets/google.svg?react";
 
@@ -194,7 +194,7 @@ export function SignupForm({
                 <Button disabled={isSigningUp} type='submit'>
                   {isSigningUp ? (
                     <div className='flex gap-2 items-center'>
-                      <CircularProgress color='inherit' size={20} />
+                      <Spinner />
                       ...Signning in
                     </div>
                   ) : (

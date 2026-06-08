@@ -28,7 +28,8 @@ import { useAlert } from "@/hooks/useAlert";
 
 import GoogleIcon from "@/assets/google.svg?react";
 import { signInUser, signInWithGoogle } from "@/lib/supabase/supabaseClient";
-import CircularProgress from "@mui/material/CircularProgress";
+import { Spinner } from "./ui/spinner";
+// import CircularProgress from "@mui/material/CircularProgress";
 
 type SignInFormType = z.infer<typeof SignInSchema>;
 
@@ -59,7 +60,7 @@ export function LoginForm({
     } catch (error) {
       console.error("Error signing in:", error);
       setAlert({
-        message: "Failed to sign in. Please try again.",
+        message: error instanceof Error ? error.message : "Failed to sign in",
         type: "error",
       });
     } finally {
@@ -78,7 +79,10 @@ export function LoginForm({
     } catch (error) {
       console.error("Error signing in with Google:", error);
       setAlert({
-        message: "Failed to sign in with Google. Please try again.",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Failed to sign in with Google",
         type: "error",
       });
       setIsLoggingIn(false);
@@ -149,7 +153,7 @@ export function LoginForm({
                 <Button size='lg' disabled={isLoggingIn} type='submit'>
                   {isLoggingIn ? (
                     <div className='flex gap-2 items-center'>
-                      <CircularProgress color='inherit' size={20} />
+                      <Spinner />
                       ...Logging in
                     </div>
                   ) : (

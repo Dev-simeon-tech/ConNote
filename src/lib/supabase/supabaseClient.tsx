@@ -60,3 +60,48 @@ export async function upsertUserFromAuth(user: User | null) {
     email,
   });
 }
+
+// conversion History functions
+export const addToConversionHistory = (
+  user_id: string,
+  category: string,
+  from_unit: string,
+  to_unit: string,
+  input_value: number,
+  output_value: number,
+) =>
+  supabase.from("conversion_history").insert({
+    user_id,
+    category,
+    from_unit,
+    to_unit,
+    input_value,
+    output_value,
+  });
+
+export const getUserConversionHistory = (user_id: string) =>
+  supabase
+    .from("conversion_history")
+    .select()
+    .eq("user_id", user_id)
+    .limit(10)
+    .order("converted_at", { ascending: false });
+
+export const getUserConversionHistoryByCategory = (
+  user_id: string,
+  category: string,
+  limit: number = 10,
+) =>
+  supabase
+    .from("conversion_history")
+    .select()
+    .eq("user_id", user_id)
+    .eq("category", category)
+    .limit(limit)
+    .order("converted_at", { ascending: false });
+
+export const deleteConversionHistory = (id: string) =>
+  supabase.from("conversion_history").delete().eq("id", id);
+
+export const deleteAllConversionHistoryForUser = (user_id: string) =>
+  supabase.from("conversion_history").delete().eq("user_id", user_id);

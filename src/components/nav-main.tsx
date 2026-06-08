@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/sidebar";
 import { ChevronRightIcon } from "lucide-react";
 import { useLocation } from "react-router";
+import { Link } from "react-router";
+import { Button } from "./ui/button";
+import useUser from "@/hooks/useUser";
 
 export function NavMain({
   items,
@@ -29,6 +32,7 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const { user } = useUser();
   const location = useLocation();
   const pathname = location.pathname;
 
@@ -49,7 +53,7 @@ export function NavMain({
                     <SidebarMenuButton
                       isActive={item.url === pathname}
                       tooltip={item.title}
-                      className='hover:bg-border hover:text-primary'
+                      className='hover:bg-border hover:text-primary data-active:bg-sidebar-active-bg'
                     />
                   }
                 >
@@ -64,7 +68,8 @@ export function NavMain({
                     {item.items?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton
-                          className='hover:bg-border hover:text-primary data-active:bg-sidebar-active-bg'
+                          isActive={subItem.url === pathname}
+                          className='hover:bg-border  data-active:bg-sidebar-active-bg'
                           render={<a href={subItem.url} />}
                         >
                           <span>{subItem.title}</span>
@@ -92,6 +97,20 @@ export function NavMain({
             )}
           </>
         ))}
+        {!user && (
+          <SidebarMenuItem className='flex gap-2 flex-col  mt-4'>
+            <Link className='md:hidden block' to={"/login"}>
+              <Button variant={"outline"} className={"px-6 w-full"} size={"lg"}>
+                Log In
+              </Button>
+            </Link>
+            <Link className='md:hidden block' to={"/signup"}>
+              <Button className={"px-6 w-full"} size={"lg"}>
+                Sign Up
+              </Button>
+            </Link>
+          </SidebarMenuItem>
+        )}
       </SidebarMenu>
     </SidebarGroup>
   );

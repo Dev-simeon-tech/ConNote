@@ -1,6 +1,6 @@
 import ConversionLayout from "../../components/layout/ConversionLayout";
-import type { TemperatureType } from "../../utils/temperatureConvertor.utils";
-import { convertTemp } from "../../utils/temperatureConvertor.utils";
+import type { TemperatureType } from "./utils/temperatureConvertor.utils";
+import { convertTemp } from "./utils/temperatureConvertor.utils";
 
 const temperatureUnits: TemperatureType[] = ["celsius", "fahrenheit", "kelvin"];
 
@@ -10,7 +10,6 @@ const Temperature = () => {
       title='Temperature'
       unitsArr={temperatureUnits}
       conversionFunc={convertTemp}
-      keypadType='temperature'
     />
   );
 };

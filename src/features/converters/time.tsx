@@ -1,5 +1,5 @@
-import type { timeType } from "../../utils/timeConvertor.utils";
-import { convertTime } from "../../utils/timeConvertor.utils";
+import type { timeType } from "./utils/timeConvertor.utils";
+import { convertTime } from "./utils/timeConvertor.utils";
 import ConversionLayout from "../../components/layout/ConversionLayout";
 
 const timeUnits: timeType[] = [

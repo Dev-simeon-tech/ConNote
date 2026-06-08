@@ -1,16 +1,24 @@
-export const getDynamicFontSize = (length: number): string => {
-  if (length < 12) return "4rem";
-  if (length < 15) return "3.5rem";
-  if (length < 18) return "2.7rem";
-  if (length < 20) return "2.2rem";
-
-  return "2rem";
+export const getDynamicFontSize = (
+  length: number,
+  isMobile: boolean | undefined,
+): string => {
+  if (isMobile) return "1rem";
+  if (length < 12) return "2.4rem";
+  if (length < 17) return "2.1rem";
+  if (length < 20) return "1.7rem";
+  if (length < 25) return "1.5rem";
+  if (length < 35) return "1.4rem";
+  if (length < 40) return "1.2rem";
+  return "1rem";
 };
-export const getDynamicInputFontSize = (length: number): string => {
-  if (length < 11) return "4rem";
-  if (length < 13) return "3.7rem";
-  if (length < 16) return "2.8rem";
-  if (length < 19) return "2.5rem";
+export const getDynamicInputFontSize = (
+  length: number,
+  isMobile: boolean | undefined,
+): string => {
+  if (isMobile) return "1rem";
+  if (length < 11) return "1.2rem";
+  if (length < 15) return "1.1rem";
+  if (length < 19) return "1rem";
 
-  return "2.2rem";
+  return "1rem";
 };

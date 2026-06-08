@@ -1,6 +1,6 @@
-import type { WeightType } from "../../utils/weightConvertor.utils";
+import type { WeightType } from "./utils/weightConvertor.utils";
 import ConversionLayout from "../../components/layout/ConversionLayout";
-import { convertWeight } from "../../utils/weightConvertor.utils";
+import { convertWeight } from "./utils/weightConvertor.utils";
 
 const WeightUnits: WeightType[] = [
   "carats",

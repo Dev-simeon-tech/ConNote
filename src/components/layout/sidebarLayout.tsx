@@ -28,13 +28,6 @@ const SidebarLayout = () => {
             />
           </div>
           <div className='flex items-center w-full px-10 pt-1'>
-            <input
-              className='w-1/2 px-5 py-2 rounded-2xl border-2 '
-              type='search'
-              placeholder='search....'
-              name=''
-              id=''
-            />
             <div className='ml-auto flex gap-4 items-center'>
               {user ? (
                 <ProfileDropdown
@@ -45,18 +38,20 @@ const SidebarLayout = () => {
                         src={user.user_metadata.picture}
                       />
                       <AvatarFallback className={"text-primary  text-xl"}>
-                        {user.user_metadata.name?.charAt(0) ||
-                          user.user_metadata.display_name?.charAt(0)}
+                        {user.user_metadata.name?.charAt(0).toUpperCase() ||
+                          user.user_metadata.display_name
+                            ?.charAt(0)
+                            .toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                   }
                 />
               ) : (
                 <>
-                  <Link to={"/login"}>
+                  <Link className='hidden md:block' to={"/login"}>
                     <button>Log In</button>
                   </Link>
-                  <Link to={"/signup"}>
+                  <Link className='hidden md:block' to={"/signup"}>
                     <Button className={"px-6 "} size={"lg"}>
                       Sign Up
                     </Button>

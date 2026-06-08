@@ -1,6 +1,6 @@
-import type { speedType } from "../../utils/speedConvertor.utils";
+import type { speedType } from "./utils/speedConvertor.utils";
 import ConversionLayout from "../../components/layout/ConversionLayout";
-import { convertSpeed } from "../../utils/speedConvertor.utils";
+import { convertSpeed } from "./utils/speedConvertor.utils";
 
 const speedUnits: speedType[] = [
   "centimeters per second",

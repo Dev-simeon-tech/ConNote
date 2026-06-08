@@ -6,10 +6,12 @@ export const getFormattedNumber = (value: string) => {
   // Prevent formatting if not parsable
   if (value === "" || value === ".") return value;
 
-  let number = parseFloat(value);
+  const number = parseFloat(value);
   let formatted = new Intl.NumberFormat("en-US", {
     maximumFractionDigits: 20,
   }).format(number);
+
+  if (value === "-") formatted = "-0";
 
   // Restore decimal if user is mid-typing
   if (hasTrailingDot) formatted += ".";
